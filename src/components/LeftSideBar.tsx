@@ -69,7 +69,7 @@ function LeftSideBar() {
           </div>
         </div>
         <div className="w-full my-3">
-          <button className="flex items-center justify-between space-x-2 rounded-full bg-transparent w-full p-3  text-sm mx-2 hover:bg-white/10 transition duration-200  ">
+          <button className="flex items-center justify-between space-x-2 rounded-full bg-transparent w-full p-3  text-sm  hover:bg-white/10 transition duration-200  ">
             <div className="rounded-full w-10 h-10 bg-slate-50"></div>
             <div className="text-sm text-left">
               <div className="font-bold ">Anurag Singh Chauhan</div>

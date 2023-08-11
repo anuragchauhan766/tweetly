@@ -15,6 +15,8 @@ const config: Config = {
       },
       colors: {
         blue: "rgb(29, 155, 240)",
+        green: "rgb(0, 186, 124)",
+        pink: "rgb(249, 24, 128)",
       },
     },
   },
