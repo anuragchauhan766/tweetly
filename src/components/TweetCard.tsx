@@ -5,9 +5,9 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { IoIosStats } from "react-icons/io";
 import { FiShare } from "react-icons/fi";
 
-function Tweets({ key }: { key: number }) {
+function TweetCard({ key }: { key: number }) {
   return (
-    <div className="w-full border-b-[0.5px] border-gray-600">
+    <div className="w-full border-b-[0.5px] border-gray-600" key={key}>
       <div className="w-full flex space-x-2 items-start p-2">
         <div className="w-10 h-10 rounded-full bg-slate-50"></div>
 
@@ -77,4 +77,4 @@ function Tweets({ key }: { key: number }) {
   );
 }
 
-export default Tweets;
+export default TweetCard;

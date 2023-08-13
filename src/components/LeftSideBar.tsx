@@ -51,7 +51,7 @@ function LeftSideBar() {
           <nav className="w-full flex flex-col space-y-2">
             {NAVIGATION_ITEMS.map((item) => (
               <Link
-                href={`/${item.title.toLowerCase}`}
+                href={`/${item.title.toLowerCase()}`}
                 key={item.title}
                 className="text-white flex items-center justify-start w-fit space-x-3 p-2 px-3 rounded-3xl hover:bg-white/10 transition duration-200"
               >
