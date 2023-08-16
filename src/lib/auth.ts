@@ -11,20 +11,20 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        name: { label: "Name", type: "text", placeholder: "full name" },
-        username: { label: "Username", type: "text", placeholder: "User name" },
-        email: { label: "Email", type: "text", placeholder: "Email" },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password",
-        },
-      },
-      authorize(credentials, req) {},
-    }),
+    // CredentialsProvider({
+    //   name: "credentials",
+    //   credentials: {
+    //     name: { label: "Name", type: "text", placeholder: "full name" },
+    //     username: { label: "Username", type: "text", placeholder: "User name" },
+    //     email: { label: "Email", type: "text", placeholder: "Email" },
+    //     password: {
+    //       label: "Password",
+    //       type: "password",
+    //       placeholder: "Password",
+    //     },
+    //   },
+    //   authorize(credentials, req) {},
+    // }),
   ],
   pages: {
     signIn: "/",
