@@ -1,6 +1,7 @@
 import TweetCard from "@/components/TweetCard";
 import TweetComposer from "@/components/TweetComposer";
 
+
 function Home() {
   return (
     <div className="max-w-screen-sm w-full  border-r-[0.5px] border-l-[0.5px] border-gray-600 ">

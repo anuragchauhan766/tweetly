@@ -1,7 +1,10 @@
 "use client";
 import autoheight from "@/helper/autoheight";
+import { useSession } from "next-auth/react";
 
 function TweetComposer() {
+  const { data: session } = useSession();
+  console.log("session", session);
   return (
     <div className="w-full min-h-40 h-fit border-t-[0.5px] border-b-[0.5px] border-gray-600 px-4 flex items-center pt-4 space-x-2">
       <div className="h-10 w-10 rounded-full bg-slate-50 self-start p-2"></div>
