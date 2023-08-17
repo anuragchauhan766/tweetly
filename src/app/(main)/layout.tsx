@@ -1,11 +1,12 @@
 import { link } from "fs";
-import "../../globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import LeftSideBar from "@/components/LeftSideBar";
+
 import RightSideBar from "@/components/RightSideBar";
 import GoToTopButton from "@/components/GoToTopButton";
 import { NextAuthProvider } from "@/components/Auth/Provider";
+import LeftSideBar from "@/components/LeftSidebar/LeftSideBar";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -35,12 +36,14 @@ export default function RootLayout({
 
       <body className={roboto.className}>
         <NextAuthProvider>
-          <div className="w-full h-full flex items-center justify-center relative text-white">
+          <div className="w-full h-full flex items-center justify-center relative text-white ">
             <div className=" max-w-screen-xl w-full h-full relative flex flex-row">
               <LeftSideBar />
               <main className="ml-72 h-full w-full">
                 <div className="w-full flex items-center justify-center space-x-4">
-                  {children}
+                  <div className="max-w-screen-sm w-full  border-r-[0.5px] border-l-[0.5px] border-gray-600 ">
+                    {children}
+                  </div>
                   <RightSideBar />
                 </div>
               </main>

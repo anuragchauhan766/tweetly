@@ -19,6 +19,12 @@ const config: Config = {
         pink: "rgb(249, 24, 128)",
         "custom-gray": "rgb(22, 24, 28)",
       },
+      boxShadow: {
+        custom:
+          "0px 0px 15px rgba(255, 255, 255, 0.2) ,0px 0px 3px 1px rgba(255, 255, 255, 0.15)",
+        "custom-triangle":
+          "2px 2px 5px -3px rgba(255, 255, 255, 0.2) ,2px 2px 3px -2px rgba(255, 255, 255, 0.15)",
+      },
     },
   },
   plugins: [],

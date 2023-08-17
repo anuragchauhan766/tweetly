@@ -3,7 +3,7 @@ import React from "react";
 function TrendingCard({ key }: { key?: number }) {
   return (
     <div
-      className="w-full hover:bg-white/10 px-4 py-3 last:rounded-b-2xl transition duration-200"
+      className="w-full hover:bg-white/10 px-4 py-3 last:rounded-b-2xl transition duration-200 cursor-pointer"
       key={key}
     >
       <div className="font-bold text-lg">#Trending1</div>

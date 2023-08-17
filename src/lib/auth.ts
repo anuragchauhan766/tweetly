@@ -1,36 +1,58 @@
 import type { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
+import GitHubProvider, { GithubProfile } from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "./prisma";
+import { db } from "./prisma";
+import { profileEnd } from "console";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+      profile(profile: GoogleProfile) {
+        return {
+          id: profile.id,
+          username: profile.email.split("@")[0],
+          email: profile.email,
+          name: profile.name,
+          image: profile.picture,
+        };
+      },
     }),
-    // CredentialsProvider({
-    //   name: "credentials",
-    //   credentials: {
-    //     name: { label: "Name", type: "text", placeholder: "full name" },
-    //     username: { label: "Username", type: "text", placeholder: "User name" },
-    //     email: { label: "Email", type: "text", placeholder: "Email" },
-    //     password: {
-    //       label: "Password",
-    //       type: "password",
-    //       placeholder: "Password",
-    //     },
-    //   },
-    //   authorize(credentials, req) {},
-    // }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
+      profile(profile: GithubProfile) {
+        return {
+          id: profile.id.toString(),
+          username: profile.email?.split("@")[0],
+          email: profile.email,
+          image: profile.avatar_url,
+          name: profile.name,
+        };
+      },
+    }),
   ],
+  callbacks: {
+    session({ session, token, user }) {
+      session.user.username = user.email.split("@")[0];
+      return session;
+    },
+  },
   pages: {
     signIn: "/",
   },
   session: {
-    strategy: "jwt",
+    strategy: "database",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

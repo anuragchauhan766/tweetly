@@ -25,7 +25,7 @@ function RightSideBar() {
           </form>
         </div>
         {/* whats happining */}
-        <div className="flex flex-col w-full bg-custom-gray rounded-2xl  space-y-3">
+        <div className="flex flex-col w-full bg-custom-gray rounded-2xl  space-y-3 ">
           <div className="px-4 pt-3">
             <h3 className="font-bold text-xl text-white tracking-wider">
               What&apos;s Happining
