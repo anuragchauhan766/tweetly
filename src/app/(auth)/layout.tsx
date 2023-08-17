@@ -1,9 +1,6 @@
 import "../globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import LeftSideBar from "@/components/LeftSideBar";
-import RightSideBar from "@/components/RightSideBar";
-import GoToTopButton from "@/components/GoToTopButton";
 import { NextAuthProvider } from "@/components/Auth/Provider";
 
 const roboto = Roboto({
