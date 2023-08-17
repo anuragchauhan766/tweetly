@@ -4,7 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 
-import React, { Fragment } from "react";
+import React from "react";
 
 function UserProfile() {
   const { data: session, status } = useSession();

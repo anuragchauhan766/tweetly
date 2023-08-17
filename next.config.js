@@ -8,6 +8,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "**.googleusercontent.com",
+      },
     ],
   },
 };
@@ -23,3 +27,4 @@ module.exports = nextConfig;
 //   ];
 // },
 //https://avatars.githubusercontent.com/u/90090056?v=4
+// https://lh3.googleusercontent.com
