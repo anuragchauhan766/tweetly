@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 function Home() {
   const { data: session } = useSession();
   console.log("session", session);

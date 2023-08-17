@@ -3,7 +3,6 @@ import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import GitHubProvider, { GithubProfile } from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "./prisma";
-import { profileEnd } from "console";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -20,7 +19,7 @@ export const authOptions: NextAuthOptions = {
       },
       profile(profile: GoogleProfile) {
         return {
-          id: profile.id,
+          id: profile.sub,
           username: profile.email.split("@")[0],
           email: profile.email,
           name: profile.name,
