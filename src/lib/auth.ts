@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
       profile(profile: GithubProfile) {
         return {
           id: profile.id.toString(),
-          username: profile.email?.split("@")[0],
+          username: profile.email?.split("@")[0] as string,
           email: profile.email,
           image: profile.avatar_url,
           name: profile.name,
@@ -42,8 +42,15 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, token, user }) {
-      session.user.username = user.email.split("@")[0];
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.username = token.username;
       return session;
     },
   },
@@ -51,7 +58,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/",
   },
   session: {
-    strategy: "database",
+    strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
