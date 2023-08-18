@@ -2,10 +2,15 @@
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { redirect } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 function Home() {
-  const { data: session } = useSession();
-  console.log("session", session);
+  const { data: session, status } = useSession();
+  if (status === "authenticated") {
+    redirect("/home");
+    return;
+  }
+
   return (
     <div className="text-white w-screen h-screen">
       <div className="flex flex-row items-center justify-center gap-3 w-full h-full">
