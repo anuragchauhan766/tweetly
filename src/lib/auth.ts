@@ -15,10 +15,13 @@ export const authOptions: NextAuthOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
+          scope:
+            "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
         },
       },
       profile(profile: GoogleProfile) {
         return {
+          ...profile,
           id: profile.sub,
           username: profile.email.split("@")[0],
           email: profile.email,
@@ -42,15 +45,19 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
+    async jwt({ token, user, account }) {
+      if (user && account) {
         token.id = user.id;
+        token.provider = account.provider;
+        token.access_token = account.access_token;
         token.username = user.username;
       }
       return token;
     },
     session({ session, token }) {
       session.user.username = token.username;
+      session.provider = token.provider;
+      session.user.access_token = token.access_token;
       return session;
     },
   },
