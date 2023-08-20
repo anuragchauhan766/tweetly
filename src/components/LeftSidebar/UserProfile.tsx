@@ -5,26 +5,12 @@ import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 
 import React from "react";
-const getuserdata = async (accessToken?: string) => {
-  const response = await fetch(
-    "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
 
-  const userData = await response.json();
-  console.log("Additional user data:", userData);
-};
 function UserProfile() {
   const { data: session, status } = useSession();
 
   if (status !== "authenticated") return;
-  if (session.provider === "google") {
-    getuserdata(session.user.access_token);
-  }
+
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="flex items-center justify-between space-x-2 rounded-full bg-transparent w-full p-3  text-sm  hover:bg-white/10 transition duration-200  cursor-pointer h-fit">
