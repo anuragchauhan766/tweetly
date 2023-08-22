@@ -17,9 +17,9 @@ export const authOptions: NextAuthOptions = {
           response_type: "code",
         },
       },
+
       profile(profile: GoogleProfile) {
         return {
-          ...profile,
           id: profile.sub,
           username: profile.email.split("@")[0],
           email: profile.email,
