@@ -1,35 +1,23 @@
 "use client";
 import { BsThreeDots } from "react-icons/bs";
 import { signOut, useSession } from "next-auth/react";
-import { Menu, Transition } from "@headlessui/react";
-import Image from "next/image";
+import { Menu } from "@headlessui/react";
 
 import React from "react";
+import ProfileImages from "../ui/ProfileImages";
 
 function UserProfile() {
   const { data: session, status } = useSession();
 
+  if (status === "loading") {
+    return <div>Loading</div>;
+  }
   if (status !== "authenticated") return;
 
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="flex items-center justify-between space-x-2 rounded-full bg-transparent w-full p-3  text-sm  hover:bg-white/10 transition duration-200  cursor-pointer h-fit">
-        <div className="rounded-full w-12 h-12 bg-transparent">
-          <Image
-            src={session.user.image as string}
-            alt="user profile image"
-            width={1000}
-            height={1000}
-            style={{
-              width: "auto",
-              height: "auto",
-              overflow: "hidden",
-            }}
-            // onError={(e) => console.error(e)}
-            priority={true}
-            className="rounded-full"
-          ></Image>
-        </div>
+        <ProfileImages ImgUrl={session.user.image as string} />
         <div className="text-sm text-left">
           <div className="font-bold ">{session.user.name}</div>
           <div className="font-thin text-white/70">
