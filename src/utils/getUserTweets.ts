@@ -27,7 +27,12 @@ export const tweetsWithAutherAndLikes =
 export const getUserTweets = async (userId: string) => {
   "use server";
   try {
-    const tweets = await db.tweet.findMany(tweetsWithAutherAndLikes);
+    const tweets = await db.tweet.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      ...tweetsWithAutherAndLikes,
+    });
 
     const tweetsWithLikes = tweets.map((tweet) => ({
       ...tweet,

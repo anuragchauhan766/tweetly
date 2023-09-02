@@ -9,14 +9,8 @@ import { useSession } from "next-auth/react";
 function TweetComposer() {
   const { data: session } = useSession();
   const Formref = useRef<null | HTMLFormElement>(null);
-  // const handleTextareaKeyDown = (
-  //   e: React.KeyboardEvent<HTMLTextAreaElement>
-  // ) => {
-  //   if (e.key === "Enter" && !e.shiftKey) {
-  //     e.preventDefault();
+  const textareaRef = useRef<null | HTMLTextAreaElement>(null);
 
-  //   }
-  // };
   if (!session) return null;
   async function action(data: FormData) {
     const res = await submitTweet(data);
@@ -24,6 +18,7 @@ function TweetComposer() {
       console.log(res.error);
     }
     Formref.current?.reset();
+    if (textareaRef.current) textareaRef.current.style.height = "56px";
   }
   return (
     <div className="w-full min-h-40 h-fit border-t-[0.5px] border-b-[0.5px] border-gray-600 px-4 flex items-center pt-4 space-x-2">
@@ -35,6 +30,7 @@ function TweetComposer() {
       >
         <div className="w-full min-h-32 h-fit focus-within:border-b-[0.5px] focus:border-gray-600">
           <textarea
+            ref={textareaRef}
             className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden px-2"
             placeholder="What is happening?!"
             name="tweetText"

@@ -33,7 +33,9 @@ function TweetCard(props: TweetCardProps) {
             </div>
           </div>
           <div className="w-full space-y-2">
-            <div className=" w-full ">{props.content}</div>
+            <div className=" w-full ">
+              <p className="whitespace-pre-wrap">{props.content}</p>
+            </div>
             {/* <div className="w-full aspect-square rounded-2xl bg-slate-50 "></div> */}
           </div>
           <div className="flex justify-between items-center w-full h-10 text-white/60">
