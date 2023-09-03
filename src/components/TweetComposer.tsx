@@ -3,13 +3,13 @@ import autoheight from "@/helper/autoheight";
 import { submitTweet } from "@/utils/submitTweet";
 import ProfileImages from "./ui/ProfileImages";
 import SubmitButton from "./ui/SubmitButton";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { AuthRequiredError } from "@/lib/exception";
 
 function TweetComposer() {
   const { data: session, status } = useSession();
-  const Formref = useRef<null | HTMLFormElement>(null);
+  const [input, setInput] = useState("");
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
 
   if (status === "loading") {
@@ -22,16 +22,15 @@ function TweetComposer() {
     if (res?.error) {
       console.log(res.error);
     }
-    Formref.current?.reset();
+    setInput("");
     if (textareaRef.current) textareaRef.current.style.height = "56px";
   }
   return (
     <div className="w-full  h-fit border-t-[0.5px] border-b-[0.5px] border-gray-600 px-4 flex items-center pt-4 space-x-2">
-      <ProfileImages ImgUrl={session.user.image as string} />
+      <ProfileImages ImgUrl={session.user.image} />
       <form
         className="w-full h-fit  flex flex-col justify-start items-center"
         action={action}
-        ref={Formref}
       >
         <div className="w-full  h-fit focus-within:border-b-[0.5px] focus:border-gray-600">
           <textarea
@@ -41,7 +40,9 @@ function TweetComposer() {
             name="tweetText"
             onChange={(e) => {
               autoheight(e, "56px");
+              setInput(e.target.value);
             }}
+            value={input}
             rows={2}
             // onKeyDown={handleTextareaKeyDown}
           ></textarea>
@@ -49,7 +50,7 @@ function TweetComposer() {
         <div className="w-full h-16 flex items-center justify-between">
           <div></div>
           <div className="w-full max-w-[100px]">
-            <SubmitButton />
+            <SubmitButton disabled={!input.trim()} />
           </div>
         </div>
       </form>

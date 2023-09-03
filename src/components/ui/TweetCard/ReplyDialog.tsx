@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import ProfileImages from "../ProfileImages";
 import moment from "moment";
@@ -22,7 +22,8 @@ function ReplyDialog({
   props: TweetCardProps;
 }) {
   const { data: session, status } = useSession();
-  const Formref = useRef<null | HTMLFormElement>(null);
+  const [input, setInput] = useState("");
+
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
 
   if (status === "loading") {
@@ -38,7 +39,7 @@ function ReplyDialog({
     if (res?.error) {
       console.log(res.error);
     }
-    Formref.current?.reset();
+    setInput("");
     if (textareaRef.current) textareaRef.current.style.height = "56px";
   }
   return (
@@ -142,7 +143,6 @@ function ReplyDialog({
                         <form
                           className="w-full h-fit  flex flex-col justify-start items-center"
                           action={action}
-                          ref={Formref}
                         >
                           <div className="w-full  h-fit ">
                             <textarea
@@ -152,14 +152,16 @@ function ReplyDialog({
                               name="tweetText"
                               onChange={(e) => {
                                 autoheight(e, "56px");
+                                setInput(e.target.value);
                               }}
+                              value={input}
                               rows={2}
                             ></textarea>
                           </div>
                           <div className="w-full h-16 flex items-center justify-end sticky bottom-0">
                             {/* <div></div> */}
                             <div className="w-full max-w-[100px] text-white">
-                              <SubmitButton />
+                              <SubmitButton disabled={!input.trim()} />
                             </div>
                           </div>
                         </form>
