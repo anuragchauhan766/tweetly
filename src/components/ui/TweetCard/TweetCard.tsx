@@ -1,11 +1,12 @@
 import React from "react";
-import { BsChat, BsDot, BsThreeDots } from "react-icons/bs";
+import { BsDot, BsThreeDots } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import moment from "moment";
-import ProfileImages from "./ui/ProfileImages";
-import LikeButton from "./ui/TweetCard/LikeButton";
+import ProfileImages from "../ProfileImages";
+import LikeButton from "./LikeButton";
 import type { TweetCardProps } from "@/types/Tweet";
+import Reply from "./Reply";
 
 function TweetCard(props: TweetCardProps) {
   return (
@@ -39,12 +40,7 @@ function TweetCard(props: TweetCardProps) {
             {/* <div className="w-full aspect-square rounded-2xl bg-slate-50 "></div> */}
           </div>
           <div className="flex justify-between items-center w-full h-10 text-white/60">
-            <div className="flex items-center justify-center space-x-2 group/chat cursor-pointer transition duration-200">
-              <div className="p-3 rounded-full group-hover/chat:bg-blue/20">
-                <BsChat className="group-hover/chat:text-blue" />
-              </div>
-              <span className="group-hover/chat:text-blue text-sm">4</span>
-            </div>
+            <Reply {...props} />
             <div className="flex items-center justify-center space-x-2 group/retweet cursor-pointer">
               <div className="p-3 rounded-full group-hover/retweet:bg-green/20">
                 <FaRetweet className="group-hover/retweet:text-green text-lg" />

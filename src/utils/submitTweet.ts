@@ -5,8 +5,23 @@ import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { Tweetschema } from "@/validationSchema/tweet";
+import { type } from "os";
+import { isReadable } from "stream";
 
-export const submitTweet = async (formData: FormData) => {
+type optionsTypes =
+  | {
+      isReply: true;
+      parentTweetId: string;
+    }
+  | {
+      isReply: false | undefined;
+      parentTweetId?: string;
+    };
+
+export const submitTweet = async (
+  formData: FormData,
+  options?: optionsTypes
+) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return;
@@ -21,6 +36,8 @@ export const submitTweet = async (formData: FormData) => {
       data: {
         autherId: session.user.id,
         content: tweetContent.toString(),
+        isReply: options?.isReply,
+        parentTweetId: options?.parentTweetId,
       },
     });
     revalidatePath("/home");

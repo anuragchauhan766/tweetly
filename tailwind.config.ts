@@ -18,6 +18,7 @@ const config: Config = {
         green: "rgb(0, 186, 124)",
         pink: "rgb(249, 24, 128)",
         "custom-gray": "rgb(22, 24, 28)",
+        "light-gray": "rgba(91, 112, 131, 0.4)",
       },
       boxShadow: {
         custom:

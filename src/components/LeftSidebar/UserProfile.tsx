@@ -5,6 +5,7 @@ import { Menu } from "@headlessui/react";
 
 import React from "react";
 import ProfileImages from "../ui/ProfileImages";
+import { AuthRequiredError } from "@/lib/exception";
 
 function UserProfile() {
   const { data: session, status } = useSession();
@@ -12,7 +13,7 @@ function UserProfile() {
   if (status === "loading") {
     return <div>Loading</div>;
   }
-  if (status !== "authenticated") return;
+  if (status !== "authenticated") throw new AuthRequiredError();
 
   return (
     <Menu as="div" className="relative">

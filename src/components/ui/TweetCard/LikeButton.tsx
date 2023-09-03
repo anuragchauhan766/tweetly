@@ -1,5 +1,5 @@
 "use client";
-import { addLike, removeLike } from "@/utils/like";
+import { toggleLikeHandler } from "@/utils/like";
 import { experimental_useOptimistic as useOptimistic } from "react";
 import { useRouter } from "next/navigation";
 import React, { useTransition } from "react";
@@ -30,20 +30,15 @@ function LikeButton(props: LikeProps) {
     }));
 
     // start transition for server request work
-    startTransition(async () => {
-      const newLikeState = !props.isLikedByCurrentUser;
-      if (newLikeState) {
-        await addLike({ userId: props.userId, tweetId: props.tweetId });
-      } else {
-        await removeLike({ userId: props.userId, tweetId: props.tweetId });
-      }
+    startTransition(() => {
+      toggleLikeHandler({ userId: props.userId, tweetId: props.tweetId });
       router.refresh();
     });
   };
 
   return (
     <button
-      disabled={isPending}
+      // disabled={isPending}
       className="flex items-center justify-center space-x-2 group/like cursor-pointer"
       onClick={toggleLike}
     >

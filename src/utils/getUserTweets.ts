@@ -28,6 +28,9 @@ export const getUserTweets = async (userId: string) => {
   "use server";
   try {
     const tweets = await db.tweet.findMany({
+      where: {
+        isReply: false,
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -40,6 +43,7 @@ export const getUserTweets = async (userId: string) => {
         (like) => like.LikedByUserId === userId
       ),
     }));
+
     return tweetsWithLikes;
   } catch (error) {
     console.error("Error fetching user tweets:", error);

@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -16,13 +15,14 @@
     /* Firefox */
   }
 }
-
+html {
+  overflow: hidden;
+}
 body {
   height: 100vh;
+  overflow: auto;
   background-color: black;
-
 }
-
 
 /* Custom scrollbar styles */
 body::-webkit-scrollbar {
