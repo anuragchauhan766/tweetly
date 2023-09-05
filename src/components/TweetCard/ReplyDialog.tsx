@@ -2,7 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import ProfileImages from "../ProfileImages";
+
 import moment from "moment";
 import { TweetCardProps } from "@/types/Tweet";
 import { BsDot } from "react-icons/bs";
@@ -10,7 +10,9 @@ import { useSession } from "next-auth/react";
 import { submitTweet } from "@/utils/submitTweet";
 import { AuthRequiredError } from "@/lib/exception";
 import autoheight from "@/helper/autoheight";
-import SubmitButton from "../SubmitButton";
+
+import ProfileImages from "../common/ProfileImages";
+import SubmitButton from "../common/button/SubmitButton";
 
 function ReplyDialog({
   isOpen,
@@ -147,11 +149,11 @@ function ReplyDialog({
                           <div className="w-full  h-fit ">
                             <textarea
                               ref={textareaRef}
-                              className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden px-2 pt-2"
+                              className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden p-2 pb-0"
                               placeholder="Post Your Reply"
                               name="tweetText"
                               onChange={(e) => {
-                                autoheight(e, "56px");
+                                autoheight(e, "56px", 8);
                                 setInput(e.target.value);
                               }}
                               value={input}
@@ -161,7 +163,9 @@ function ReplyDialog({
                           <div className="w-full h-16 flex items-center justify-end sticky bottom-0">
                             {/* <div></div> */}
                             <div className="w-full max-w-[100px] text-white">
-                              <SubmitButton disabled={!input.trim()} />
+                              <SubmitButton disabled={!input.trim()}>
+                                Reply
+                              </SubmitButton>
                             </div>
                           </div>
                         </form>

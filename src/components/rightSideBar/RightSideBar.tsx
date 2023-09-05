@@ -1,7 +1,7 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
-import TrendingCard from "./rightSideBar/TrendingCard";
-import ProfileCard from "./rightSideBar/ProfileCard";
+import TrendingCard from "./TrendingCard";
+import ProfileCard from "./ProfileCard";
 function RightSideBar() {
   return (
     <div className="w-full flex-1 h-full self-start  sticky -top-80  ">

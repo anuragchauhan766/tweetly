@@ -3,7 +3,7 @@ import { BsDot, BsThreeDots } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import moment from "moment";
-import ProfileImages from "../ProfileImages";
+import ProfileImages from "../common/ProfileImages";
 import LikeButton from "./LikeButton";
 import type { TweetCardProps } from "@/types/Tweet";
 import Reply from "./Reply";

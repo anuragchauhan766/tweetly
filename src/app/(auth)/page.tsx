@@ -2,7 +2,8 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import Login from "@/components/Auth/Login";
+import Login from "./_component/Login";
+
 async function Home() {
   const session = await getServerSession(authOptions);
   if (session) redirect("/home");
@@ -17,7 +18,7 @@ async function Home() {
             height={100}
             priority={true}
             style={{
-              width: "100%",
+              width: "auto",
               maxHeight: "380px",
               height: "50%",
             }}

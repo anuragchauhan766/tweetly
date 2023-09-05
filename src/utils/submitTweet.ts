@@ -5,8 +5,6 @@ import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { Tweetschema } from "@/validationSchema/tweet";
-import { type } from "os";
-import { isReadable } from "stream";
 
 type optionsTypes =
   | {
@@ -35,7 +33,7 @@ export const submitTweet = async (
     await db.tweet.create({
       data: {
         autherId: session.user.id,
-        content: tweetContent.toString(),
+        content: tweetContent.toString().trim(),
         isReply: options?.isReply,
         parentTweetId: options?.parentTweetId,
       },

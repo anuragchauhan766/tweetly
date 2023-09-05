@@ -1,7 +1,6 @@
-import RightSideBar from "@/components/RightSideBar";
-import GoToTopButton from "@/components/GoToTopButton";
-
 import LeftSideBar from "@/components/LeftSidebar/LeftSideBar";
+import GoToTopButton from "@/components/common/button/GoToTopButton";
+import RightSideBar from "@/components/rightSideBar/RightSideBar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

@@ -1,5 +1,6 @@
-import TweetComposer from "@/components/TweetComposer";
-import TweetCard from "@/components/ui/TweetCard/TweetCard";
+
+import TweetCard from "@/components/TweetCard/TweetCard";
+import TweetComposer from "@/components/common/TweetComposer";
 import { authOptions } from "@/lib/auth";
 import { AuthRequiredError } from "@/lib/exception";
 import type { TweetCardProps } from "@/types/Tweet";

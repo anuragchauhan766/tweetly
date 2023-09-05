@@ -3,9 +3,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { signOut, useSession } from "next-auth/react";
 import { Menu } from "@headlessui/react";
 
-import React from "react";
-import ProfileImages from "../ui/ProfileImages";
-import { AuthRequiredError } from "@/lib/exception";
+import ProfileImages from "../common/ProfileImages";
 
 function UserProfile() {
   const { data: session, status } = useSession();
@@ -13,12 +11,13 @@ function UserProfile() {
   if (status === "loading") {
     return <div>Loading</div>;
   }
-  if (status !== "authenticated") throw new AuthRequiredError();
+  if (status !== "authenticated") return null;
 
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="flex items-center justify-between space-x-2 rounded-full bg-transparent w-full p-3  text-sm  hover:bg-white/10 transition duration-200  cursor-pointer h-fit">
-        <ProfileImages ImgUrl={session.user.image as string} />
+        <ProfileImages ImgUrl={session.user.image} />
+
         <div className="text-sm text-left">
           <div className="font-bold ">{session.user.name}</div>
           <div className="font-thin text-white/70">

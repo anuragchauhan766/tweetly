@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import FollowButton from "../common/button/FollowButton";
 
 function ProfileCard() {
   return (
@@ -12,13 +13,7 @@ function ProfileCard() {
         </div>
       </Link>
       <div className="">
-        <button
-          className="flex items-center justify-center px-4 py-1 bg-white rounded-full text-black
-           font-medium"
-          onClick={() => console.log("clicked")}
-        >
-          Follow
-        </button>
+        <FollowButton />
       </div>
     </div>
   );

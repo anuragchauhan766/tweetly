@@ -1,8 +1,8 @@
 "use client";
 import autoheight from "@/helper/autoheight";
 import { submitTweet } from "@/utils/submitTweet";
-import ProfileImages from "./ui/ProfileImages";
-import SubmitButton from "./ui/SubmitButton";
+import ProfileImages from "./ProfileImages";
+import SubmitButton from "./button/SubmitButton";
 import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { AuthRequiredError } from "@/lib/exception";
@@ -35,22 +35,22 @@ function TweetComposer() {
         <div className="w-full  h-fit focus-within:border-b-[0.5px] focus:border-gray-600">
           <textarea
             ref={textareaRef}
-            className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden px-2 pt-2"
+            className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden p-2 pb-0 box-border"
             placeholder="What is happening?!"
             name="tweetText"
             onChange={(e) => {
-              autoheight(e, "56px");
+              autoheight(e, "56px", 8);
               setInput(e.target.value);
             }}
             value={input}
-            rows={2}
+
             // onKeyDown={handleTextareaKeyDown}
           ></textarea>
         </div>
         <div className="w-full h-16 flex items-center justify-between">
           <div></div>
           <div className="w-full max-w-[100px]">
-            <SubmitButton disabled={!input.trim()} />
+            <SubmitButton disabled={!input.trim()}>Post</SubmitButton>
           </div>
         </div>
       </form>

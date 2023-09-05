@@ -44,12 +44,15 @@ model User {
   username      String?   @unique
   emailVerified DateTime?
   image         String?
+  discription   String?
   accounts      Account[]
   sessions      Session[]
   tweets        Tweet[]
   likes         Like[]
   followers     User[]    @relation("UserFollows")
   following     User[]    @relation("UserFollows")
+  createdAt     DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime  @updatedAt
 }
 
 model VerificationToken {
