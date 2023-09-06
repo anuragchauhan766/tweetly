@@ -13,7 +13,6 @@ const autoheight = (
     const target = element.target;
     target.style.height = defaultHeight;
     target.style.height = `${target.scrollHeight + padding}px`;
-    console.log(target.style.height);
   }
 };
 export default autoheight;
