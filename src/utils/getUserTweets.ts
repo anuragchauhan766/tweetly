@@ -46,7 +46,6 @@ export const getUserTweets = async (userId: string) => {
 
     return tweetsWithLikes;
   } catch (error) {
-    console.error("Error fetching user tweets:", error);
     throw error;
   }
 };

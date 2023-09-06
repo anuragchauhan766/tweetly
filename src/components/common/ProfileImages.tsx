@@ -11,7 +11,7 @@ function ProfileImages({
 }) {
   return (
     <div
-      className={`rounded-full w-12 h-12 bg-transparent self-start flex-none border-2 border-black relative ${className}`}
+      className={`relative rounded-full w-12 h-12 bg-transparent self-start flex-none border-2 border-black  ${className}`}
     >
       <Image
         src={ImgUrl ?? "/default-profile.png"}

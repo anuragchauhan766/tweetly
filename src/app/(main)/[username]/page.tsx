@@ -24,7 +24,9 @@ async function ProfilePage({ params }: { params: { username: string } }) {
         <GoBackButton />
         <div className="flex flex-col items-start justify-center">
           <span className="font-bold">{userProfile.name}</span>
-          <span className="font-light text-gray-500 text-base">Posts</span>
+          <span className="font-light text-gray-500 text-base">
+            {userProfile._count.tweets} Posts
+          </span>
         </div>
       </div>
 

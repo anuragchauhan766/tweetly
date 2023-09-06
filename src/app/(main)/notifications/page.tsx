@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import React from "react";
 
-function Explore() {
+function Notifications() {
   const pathname = usePathname();
   return (
     <div className="flex items-center justify-center text-white mt-10">
@@ -17,4 +17,4 @@ function Explore() {
   );
 }
 
-export default Explore;
+export default Notifications;

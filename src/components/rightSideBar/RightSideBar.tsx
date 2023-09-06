@@ -2,7 +2,15 @@ import React from "react";
 import { FiSearch } from "react-icons/fi";
 import TrendingCard from "./TrendingCard";
 import ProfileCard from "./ProfileCard";
-function RightSideBar() {
+import { getUsers } from "@/utils/getUsers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { AuthRequiredError } from "@/lib/exception";
+async function RightSideBar() {
+  const session = await getServerSession(authOptions);
+  if (!session) throw new AuthRequiredError();
+  const peoples = await getUsers();
+  if (!peoples) return null;
   return (
     <div className="w-full flex-1 h-full self-start  sticky -top-80  ">
       <div className="flex flex-col w-full h-fit space-y-4 ">
@@ -42,9 +50,11 @@ function RightSideBar() {
               Who to follow
             </h3>
           </div>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <ProfileCard key={i} />
-          ))}
+          {peoples.map((people) => {
+            if (people.username !== session.user.username) {
+              return <ProfileCard key={people.username} {...people} />;
+            }
+          })}
         </div>
         {/* creater info */}
         <div className="flex items-center justify-center w-full text-sm font-thin text-gray-500">

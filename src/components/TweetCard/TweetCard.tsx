@@ -7,26 +7,37 @@ import ProfileImages from "../common/ProfileImages";
 import LikeButton from "./LikeButton";
 import type { TweetCardProps } from "@/types/Tweet";
 import Reply from "./Reply";
+import Link from "next/link";
+import { formatTimeRelative } from "@/helper/formatDate";
 
 function TweetCard(props: TweetCardProps) {
   return (
     <div className="w-full border-b-[0.5px] border-gray-600">
       <div className="w-full flex space-x-2 items-start p-2">
-        <ProfileImages ImgUrl={props.auther.image} />
+        <Link href={`/${props.auther.username as string}`}>
+          <ProfileImages ImgUrl={props.auther.image} />
+        </Link>
 
         <div className="w-full flex flex-col px-2 space-y-2">
           <div className="flex items-center justify-between">
-            <div className="flex w-full space-x-1 items-center justify-start ">
-              <span className="font-bold ">{props.auther.name}</span>
-              <span className="font-thin text-gray-500">
-                @{props.auther.username}
-              </span>
+            <div className="flex w-full  items-center justify-start ">
+              <Link
+                href={`/${props.auther.username as string}`}
+                className="flex items-center justify-center gap-2"
+              >
+                <span className="font-bold hover:underline decoration-1">
+                  {props.auther.name}
+                </span>
+                <span className="font-thin text-gray-500">
+                  @{props.auther.username}
+                </span>
+              </Link>
 
               <BsDot className="text-gray-500" />
 
               <span className="font-thin text-gray-500 hover:underline">
                 {/* to be upgraded to absolute after a day */}
-                {moment(props.createdAt).fromNow()}
+                {formatTimeRelative(props.createdAt)}
               </span>
             </div>
             <div className="rounded-full p-2 hover:bg-blue/20 group cursor-pointer">

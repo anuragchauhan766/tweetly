@@ -9,6 +9,7 @@ const UserDetailsRelationqueries = Prisma.validator<Prisma.UserDefaultArgs>()({
       select: {
         followers: true,
         following: true,
+        tweets: true,
       },
     },
   },

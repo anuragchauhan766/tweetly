@@ -18,7 +18,7 @@ export default function Error({
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">Something went wrong :(</h1>
-        <p className="text-lg mb-4">{error.message}</p>
+        {/* <p className="text-lg mb-4">Try Again</p> */}
         <button
           type="button"
           onClick={() => reset()}
