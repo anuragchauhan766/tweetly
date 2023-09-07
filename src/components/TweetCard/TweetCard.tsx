@@ -1,5 +1,5 @@
 import React from "react";
-import { BsDot, BsThreeDots } from "react-icons/bs";
+import { BsThreeDots } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import moment from "moment";
@@ -11,37 +11,62 @@ import Link from "next/link";
 import { formatTimeRelative } from "@/helper/formatDate";
 
 function TweetCard(props: TweetCardProps) {
+  const { main } = props;
+
   return (
     <div className="w-full border-b-[0.5px] border-gray-600">
       <div className="w-full flex space-x-2 items-start p-2">
-        <Link href={`/${props.auther.username as string}`}>
-          <ProfileImages ImgUrl={props.auther.image} />
-        </Link>
+        {main !== true ? (
+          <Link href={`/${props.auther.username as string}`}>
+            <ProfileImages ImgUrl={props.auther.image} />
+          </Link>
+        ) : null}
 
-        <div className="w-full flex flex-col px-2 space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex w-full  items-center justify-start ">
+        <div className="w-full flex flex-col px-1 ">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex w-full  items-center justify-start gap-1">
+              {main === true ? (
+                <Link
+                  href={`/${props.auther.username as string}`}
+                  className="mr-2"
+                >
+                  <ProfileImages ImgUrl={props.auther.image} />
+                </Link>
+              ) : null}
+
               <Link
                 href={`/${props.auther.username as string}`}
-                className="flex items-center justify-center gap-2"
+                className={`flex items-start justify-center  ${
+                  main === true ? "flex-col gap-0" : "gap-2"
+                }`}
               >
-                <span className="font-bold hover:underline decoration-1">
-                  {props.auther.name}
-                </span>
-                <span className="font-thin text-gray-500">
-                  @{props.auther.username}
-                </span>
+                <div>
+                  <span className="font-bold hover:underline decoration-1">
+                    {props.auther.name}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-thin text-gray-500 text-base">
+                    @{props.auther.username}
+                  </span>
+                </div>
               </Link>
-
-              <BsDot className="text-gray-500" />
-
-              <span className="font-thin text-gray-500 hover:underline">
-                {/* to be upgraded to absolute after a day */}
-                {formatTimeRelative(props.createdAt)}
-              </span>
+              {main !== true ? (
+                <>
+                  {/* <BsDot className="text-gray-500" /> */}
+                  <span className="text-gray-500 ">·</span>
+                  <span className="font-thin text-gray-500 hover:underline">
+                    {/* to be upgraded to absolute after a day */}
+                    {formatTimeRelative(props.createdAt)}
+                  </span>
+                </>
+              ) : null}
             </div>
-            <div className="rounded-full p-2 hover:bg-blue/20 group cursor-pointer">
-              <BsThreeDots className="group-hover:text-blue" />
+            <div>
+              <div className="relative group cursor-pointer">
+                <div className="absolute top-0 left-0 right-0 bottom-0 rounded-full p-4 hover:bg-blue/20 -m-2"></div>
+                <BsThreeDots className="group-hover:text-blue" />
+              </div>
             </div>
           </div>
           <div className="w-full space-y-2">
@@ -50,7 +75,21 @@ function TweetCard(props: TweetCardProps) {
             </div>
             {/* <div className="w-full aspect-square rounded-2xl bg-slate-50 "></div> */}
           </div>
-          <div className="flex justify-between items-center w-full h-10 text-white/60">
+          {main === true ? (
+            <div className="text-gray-400 font-light text-base border-b-[0.5px] border-gray-600">
+              <div className="my-3">
+                <span className="hover:underline decoration-1 cursor-pointer ">
+                  {moment(props.createdAt).format("h:mm A · MMM D,YYYY")}
+                </span>
+              </div>
+            </div>
+          ) : null}
+
+          <div
+            className={`flex  items-center w-full h-10 text-white/60 ${
+              main === true ? "justify-around" : "justify-between"
+            }`}
+          >
             <Reply {...props} />
             <div className="flex items-center justify-center space-x-2 group/retweet cursor-pointer">
               <div className="p-3 rounded-full group-hover/retweet:bg-green/20">

@@ -1,4 +1,3 @@
-
 import TweetCard from "@/components/TweetCard/TweetCard";
 import TweetComposer from "@/components/common/TweetComposer";
 import { authOptions } from "@/lib/auth";
@@ -21,6 +20,15 @@ async function Home() {
         Home
       </div>
       <TweetComposer />
+      {/* *********************************** */}
+      {/*for testing only */}
+      <TweetCard
+        key={Tweets[0].id}
+        {...Tweets[0]}
+        currentUserId={session.user.id}
+        main={true}
+      />
+      {/* **************************** */}
       {Tweets.map((tweet) => {
         const tweetCardProps: TweetCardProps = {
           ...tweet,

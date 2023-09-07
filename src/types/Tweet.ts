@@ -7,6 +7,7 @@ export type TweetsWithAutherAndLikes = Prisma.TweetGetPayload<
 export type TweetCardProps = TweetsWithAutherAndLikes & {
   currentUserId: User["id"];
   isLikedByCurrentUser: boolean;
+  main?: boolean;
 };
 export type LikeHandler = ({
   userId,
