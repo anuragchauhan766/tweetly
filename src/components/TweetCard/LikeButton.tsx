@@ -12,7 +12,7 @@ interface LikeProps {
   isLikedByCurrentUser: boolean;
 }
 
-function LikeButton(props: LikeProps) {
+function  LikeButton(props: LikeProps) {
   const router = useRouter();
 
   const [isPending, startTransition] = useTransition();

@@ -16,7 +16,9 @@ function Reply(props: TweetCardProps) {
         <div className="p-3 rounded-full group-hover/chat:bg-blue/20">
           <BsChat className="group-hover/chat:text-blue" />
         </div>
-        <span className="group-hover/chat:text-blue text-sm">4</span>
+        <span className="group-hover/chat:text-blue text-sm">
+          {props._count.replies}
+        </span>
       </button>
       <ReplyDialog isOpen={isOpen} setIsOpen={setIsOpen} props={props} />
     </>

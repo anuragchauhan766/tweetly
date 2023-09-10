@@ -8,7 +8,9 @@ import { useSession } from "next-auth/react";
 import { AuthRequiredError } from "@/lib/exception";
 
 function TweetComposer() {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+  });
   const [input, setInput] = useState("");
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
 
@@ -16,7 +18,7 @@ function TweetComposer() {
     // to be improve
     return <div>Loading</div>;
   }
-  if (status !== "authenticated") throw new AuthRequiredError();
+
   async function action(data: FormData) {
     const res = await submitTweet(data);
     if (res?.error) {

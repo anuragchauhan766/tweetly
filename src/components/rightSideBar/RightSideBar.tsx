@@ -6,11 +6,13 @@ import { getUsers } from "@/utils/getUsers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { AuthRequiredError } from "@/lib/exception";
+import { getNews } from "@/utils/getNews";
 async function RightSideBar() {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
   const peoples = await getUsers();
   if (!peoples) return null;
+  const data = await getNews();
   return (
     <div className="w-full flex-1 h-full self-start  sticky -top-80  ">
       <div className="flex flex-col w-full h-fit space-y-4 ">
@@ -39,8 +41,12 @@ async function RightSideBar() {
               What&apos;s Happining
             </h3>
           </div>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <TrendingCard key={i} />
+          {data.map((news) => (
+            <TrendingCard
+              key={news.title}
+              title={news.title}
+              image={news.enclosure["@url"]}
+            />
           ))}
         </div>
         {/* who to follow */}

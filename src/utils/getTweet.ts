@@ -7,6 +7,29 @@ export const TweetQueries = Prisma.validator<Prisma.TweetDefaultArgs>()({
     _count: {
       select: {
         likes: true,
+        replies: true,
+      },
+    },
+    replies: {
+      include: {
+        _count: {
+          select: {
+            likes: true,
+            replies: true,
+          },
+        },
+        likes: {
+          select: {
+            LikedByUserId: true,
+          },
+        },
+        auther: {
+          select: {
+            username: true,
+            image: true,
+            name: true,
+          },
+        },
       },
     },
     likes: {
@@ -35,15 +58,24 @@ export const getTweet = async (tweetId: string, userId: string) => {
     if (!tweet) {
       return;
     }
-    const tweetsWithLikes = {
+
+    const repliesWithLikes = tweet.replies.map((reply) => ({
+      ...reply,
+      isLikedByCurrentUser: reply.likes.some(
+        (like) => like.LikedByUserId === userId
+      ),
+    }));
+    const tweetWithLikes = {
       ...tweet,
       isLikedByCurrentUser: tweet.likes.some(
         (like) => like.LikedByUserId === userId
       ),
+      replies: repliesWithLikes,
     };
 
-    return tweetsWithLikes;
+    return tweetWithLikes;
   } catch (error) {
     throw error;
   }
 };
+// type UsersWithPosts = Prisma.PromiseReturnType<typeof getTweet>;

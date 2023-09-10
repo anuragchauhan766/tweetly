@@ -13,6 +13,7 @@ import autoheight from "@/helper/autoheight";
 
 import ProfileImages from "../common/ProfileImages";
 import SubmitButton from "../common/button/SubmitButton";
+import { redirect } from "next/dist/server/api-utils";
 
 function ReplyDialog({
   isOpen,
@@ -23,16 +24,13 @@ function ReplyDialog({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   props: TweetCardProps;
 }) {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+  });
   const [input, setInput] = useState("");
 
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
-
-  if (status === "loading") {
-    // to be improve
-    return <div>Loading</div>;
-  }
-  if (status !== "authenticated") throw new AuthRequiredError();
+  if (status === "loading") return null;
   async function action(data: FormData) {
     const res = await submitTweet(data, {
       isReply: true,
@@ -42,6 +40,7 @@ function ReplyDialog({
       console.log(res.error);
     }
     setInput("");
+    setIsOpen(false);
     if (textareaRef.current) textareaRef.current.style.height = "56px";
   }
   return (

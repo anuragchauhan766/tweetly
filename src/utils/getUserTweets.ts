@@ -8,6 +8,7 @@ export const tweetsWithAutherAndLikes =
       _count: {
         select: {
           likes: true,
+          replies: true,
         },
       },
       likes: {

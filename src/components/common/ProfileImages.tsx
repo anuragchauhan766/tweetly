@@ -12,7 +12,7 @@ function ProfileImages({
 }) {
   const newUrl =
     ImgUrl?.replace("96", ImgSize ?? "96") ?? "/default-profile.png";
-  console.log(newUrl);
+
   return (
     <div
       className={`relative rounded-full w-12 h-12 bg-transparent self-start flex-none border-2 border-black  ${className}`}

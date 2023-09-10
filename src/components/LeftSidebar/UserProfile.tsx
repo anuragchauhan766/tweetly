@@ -6,12 +6,13 @@ import { Menu } from "@headlessui/react";
 import ProfileImages from "../common/ProfileImages";
 
 function UserProfile() {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+  });
 
   if (status === "loading") {
     return <div>Loading</div>;
   }
-  if (status !== "authenticated") return null;
 
   return (
     <Menu as="div" className="relative">

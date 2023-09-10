@@ -20,6 +20,13 @@ async function TweetPage({ params }: { params: { tweetid: string } }) {
       </div>
       <div>
         <TweetCard {...tweet} currentUserId={session.user.id} main={true} />
+        {tweet.replies.map((reply) => (
+          <TweetCard
+            {...reply}
+            key={reply.id}
+            currentUserId={session.user.id}
+          />
+        ))}
       </div>
     </div>
   );
