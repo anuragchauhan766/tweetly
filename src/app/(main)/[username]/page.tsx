@@ -20,7 +20,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
   return (
     <div className=" w-full">
       {/* top header bar */}
-      <div className="w-full  font-bold text-xl p-1 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 gap-6 ps-2">
+      <div className="w-full  font-bold text-xl p-1 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 gap-6 ps-2 z-50">
         <GoBackButton />
         <div className="flex flex-col items-start justify-center">
           <span className="font-bold">{userProfile.name}</span>
@@ -48,6 +48,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
               >
                 <ProfileImages
                   ImgUrl={userProfile.image}
+                  ImgSize="200"
                   className="w-32 h-32 min-w-[40px] border-4"
                 />
               </div>

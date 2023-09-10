@@ -14,17 +14,26 @@ function TweetCard(props: TweetCardProps) {
   const { main } = props;
 
   return (
-    <div className="w-full border-b-[0.5px] border-gray-600">
-      <div className="w-full flex space-x-2 items-start p-2">
+    <div className="relative w-full border-b-[0.5px] border-gray-600">
+      {main !== true ? (
+        <Link
+          href={`/${props.auther.username}/tweet/${props.id}`}
+          className="absolute top-0 left-0  w-full h-full z-[4]"
+        >
+          <span className="hidden"></span>
+        </Link>
+      ) : null}
+
+      <div className="w-full flex space-x-2 items-start p-2 ">
         {main !== true ? (
-          <Link href={`/${props.auther.username as string}`}>
+          <Link href={`/${props.auther.username as string}`} className="z-[10]">
             <ProfileImages ImgUrl={props.auther.image} />
           </Link>
         ) : null}
 
         <div className="w-full flex flex-col px-1 ">
           <div className="flex items-center justify-between mb-2">
-            <div className="flex w-full  items-center justify-start gap-1">
+            <div className="flex w-full  items-center justify-start gap-1 z-[10]">
               {main === true ? (
                 <Link
                   href={`/${props.auther.username as string}`}
@@ -86,17 +95,18 @@ function TweetCard(props: TweetCardProps) {
           ) : null}
 
           <div
-            className={`flex  items-center w-full h-10 text-white/60 ${
-              main === true ? "justify-around" : "justify-between"
+            className={`flex  items-center w-full h-10 text-white/60 mt-1  ${
+              main === true ? "justify-around" : "justify-between "
             }`}
           >
             <Reply {...props} />
-            <div className="flex items-center justify-center space-x-2 group/retweet cursor-pointer">
+            <div className="flex items-center justify-center space-x-2 group/retweet cursor-pointer z-[10]">
               <div className="p-3 rounded-full group-hover/retweet:bg-green/20">
                 <FaRetweet className="group-hover/retweet:text-green text-lg" />
               </div>
               <span className="group-hover/retweet:text-green text-sm">4</span>
             </div>
+
             <LikeButton
               userId={props.currentUserId}
               tweetId={props.id}
@@ -104,7 +114,7 @@ function TweetCard(props: TweetCardProps) {
               isLikedByCurrentUser={props.isLikedByCurrentUser}
             />
 
-            <div className="flex items-center justify-center space-x-2 group/share cursor-pointer">
+            <div className="flex items-center justify-center space-x-2 group/share cursor-pointer z-[10]">
               <div className="p-3 rounded-full group-hover/share:bg-blue/20">
                 <FiShare className="group-hover/share:text-blue text-lg" />
               </div>

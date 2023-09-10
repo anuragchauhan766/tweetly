@@ -22,6 +22,7 @@ function LikeButton(props: LikeProps) {
   });
 
   const toggleLike = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setOptimisticLike((prev) => ({
       isLikedByCurrentUser: !prev.isLikedByCurrentUser,
       LikeCount: prev.isLikedByCurrentUser
@@ -39,7 +40,7 @@ function LikeButton(props: LikeProps) {
   return (
     <button
       // disabled={isPending}
-      className="flex items-center justify-center space-x-2 group/like cursor-pointer"
+      className="flex items-center justify-center space-x-2 group/like cursor-pointer z-[10]"
       onClick={toggleLike}
     >
       <div className="p-3 rounded-full group-hover/like:bg-pink/20">

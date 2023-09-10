@@ -1,23 +1,27 @@
 "use client";
 import Image from "next/image";
-import { CSSProperties } from "react";
 
 function ProfileImages({
   ImgUrl,
+  ImgSize,
   className,
 }: {
   ImgUrl: string | null | undefined;
+  ImgSize?: string;
   className?: string;
 }) {
+  const newUrl =
+    ImgUrl?.replace("96", ImgSize ?? "96") ?? "/default-profile.png";
+  console.log(newUrl);
   return (
     <div
       className={`relative rounded-full w-12 h-12 bg-transparent self-start flex-none border-2 border-black  ${className}`}
     >
       <Image
-        src={ImgUrl ?? "/default-profile.png"}
+        src={newUrl}
         alt="user profile image"
         fill={true}
-        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 120px"
+        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 200px"
         style={{
           overflow: "hidden",
         }}
