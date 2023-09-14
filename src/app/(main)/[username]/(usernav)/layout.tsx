@@ -9,8 +9,15 @@ import EditProfileButton from "@/components/common/button/EditProfileButton";
 import FollowButton from "@/components/common/button/FollowButton";
 import { BiCalendar } from "react-icons/bi";
 import moment from "moment";
-
-async function ProfilePage({ params }: { params: { username: string } }) {
+import Navigation from "@/components/UserPage/Navigation";
+import Link from "next/link";
+export default async function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { username: string };
+}) {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
   const userProfile = await getUserDetails(params.username);
@@ -104,8 +111,10 @@ async function ProfilePage({ params }: { params: { username: string } }) {
           </div>
         </div>
       </div>
+      <nav>
+        <Navigation />
+        {children}
+      </nav>
     </div>
   );
 }
-
-export default ProfilePage;

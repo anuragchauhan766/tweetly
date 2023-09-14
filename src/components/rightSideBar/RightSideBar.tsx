@@ -13,6 +13,7 @@ async function RightSideBar() {
   const peoples = await getUsers();
   if (!peoples) return null;
   const data = await getNews();
+
   return (
     <div className="w-full flex-1 h-full self-start  sticky -top-80  ">
       <div className="flex flex-col w-full h-fit space-y-4 ">
@@ -42,11 +43,7 @@ async function RightSideBar() {
             </h3>
           </div>
           {data.map((news) => (
-            <TrendingCard
-              key={news.title}
-              title={news.title}
-              image={news.enclosure["@url"]}
-            />
+            <TrendingCard key={news.title} {...news} />
           ))}
         </div>
         {/* who to follow */}

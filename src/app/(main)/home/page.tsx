@@ -3,8 +3,7 @@ import TweetComposer from "@/components/common/TweetComposer";
 import { authOptions } from "@/lib/auth";
 import { AuthRequiredError } from "@/lib/exception";
 import type { TweetCardProps } from "@/types/Tweet";
-
-import { getUserTweets } from "@/utils/getUserTweets";
+import { getHomeTimelineTweets } from "@/utils/getHomeTimelineTweets";
 
 import { getServerSession } from "next-auth";
 
@@ -12,7 +11,7 @@ async function Home() {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
 
-  const Tweets = await getUserTweets(session.user.id);
+  const Tweets = await getHomeTimelineTweets(session.user.id);
 
   return (
     <div className=" w-full">

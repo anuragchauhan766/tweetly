@@ -1,47 +1,41 @@
 import { db } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 
-// queries for relation field and select field
-export const tweetsWithAutherAndLikes =
-  Prisma.validator<Prisma.TweetDefaultArgs>()({
-    include: {
-      _count: {
-        select: {
-          likes: true,
-          replies: true,
-        },
-      },
-      likes: {
-        select: {
-          LikedByUserId: true,
-        },
-      },
-      auther: {
-        select: {
-          username: true,
-          image: true,
-          name: true,
-        },
-      },
-    },
-  });
-export const getUserTweets = async (userId: string) => {
-  "use server";
-  try {
-    const tweets = await db.tweet.findMany({
-      where: {
-        isReply: false,
-      },
+import { tweetsWithAutherAndLikes } from "./getHomeTimelineTweets";
+import { Prisma } from "@prisma/client";
+export const userTweetsquery = Prisma.validator<Prisma.UserDefaultArgs>()({
+  select: {
+    tweets: {
       orderBy: {
         createdAt: "desc",
       },
       ...tweetsWithAutherAndLikes,
+    },
+  },
+});
+/**
+ *
+ * @param userId - user's username to fetch its tweet
+ * @param currentUserId - id of current logged in user
+ * @returns - array of tweet of user(visited)
+ */
+export const getUserTweets = async (
+  username: string,
+  currentUserId: string
+) => {
+  "use server";
+  try {
+    const res = await db.user.findUnique({
+      where: {
+        username: username,
+      },
+      ...userTweetsquery,
     });
+    if (!res) return;
 
-    const tweetsWithLikes = tweets.map((tweet) => ({
+    const tweetsWithLikes = res.tweets.map((tweet) => ({
       ...tweet,
       isLikedByCurrentUser: tweet.likes.some(
-        (like) => like.LikedByUserId === userId
+        (like) => like.LikedByUserId === currentUserId
       ),
     }));
 
