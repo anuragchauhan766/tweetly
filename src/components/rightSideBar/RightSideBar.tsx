@@ -10,7 +10,7 @@ import { getNews } from "@/utils/getNews";
 async function RightSideBar() {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
-  const peoples = await getUsers();
+  const peoples = await getUsers(session.user.id);
   if (!peoples) return null;
   const data = await getNews();
 
@@ -55,7 +55,13 @@ async function RightSideBar() {
           </div>
           {peoples.map((people) => {
             if (people.username !== session.user.username) {
-              return <ProfileCard key={people.username} {...people} />;
+              return (
+                <ProfileCard
+                  key={people.id}
+                  {...people}
+                  currentUserId={session.user.id}
+                />
+              );
             }
           })}
         </div>

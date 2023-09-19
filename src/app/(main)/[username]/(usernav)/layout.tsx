@@ -20,7 +20,8 @@ export default async function Layout({
 }) {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
-  const userProfile = await getUserDetails(params.username);
+  const userProfile = await getUserDetails(params.username, session.user.id);
+
   if (!userProfile) {
     notFound();
   }
@@ -64,7 +65,11 @@ export default async function Layout({
               {userProfile.id === session.user.id ? (
                 <EditProfileButton />
               ) : (
-                <FollowButton />
+                <FollowButton
+                  currentUserId={session.user.id}
+                  userIdTofollow={userProfile.id}
+                  isFollowing={userProfile.isFollowingByCurrentUser}
+                />
               )}
             </div>
           </div>
@@ -103,7 +108,7 @@ export default async function Layout({
               </span>
             </div>
             <div className="flex items-center gap-1">
-              {userProfile._count.followers}
+              {userProfile._count.follower}
               <span className="text-base font-light text-gray-500">
                 Followers
               </span>

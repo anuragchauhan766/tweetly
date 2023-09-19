@@ -30,7 +30,11 @@ function ProfileCard(props: ProfileCardProps) {
         </div>
       </Link>
       <div className="">
-        <FollowButton />
+        <FollowButton
+          currentUserId={props.currentUserId}
+          userIdTofollow={props.id}
+          isFollowing={props.isFollowingByCurrentUser}
+        />
       </div>
     </div>
   );

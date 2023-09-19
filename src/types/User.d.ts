@@ -1,4 +1,7 @@
 import { usersQueries } from "@/utils/getUsers";
 import { Prisma } from "@prisma/client";
 
-export type ProfileCardProps = Prisma.UserGetPayload<typeof usersQueries>;
+export type ProfileCardProps = Prisma.UserGetPayload<typeof usersQueries> & {
+  currentUserId: string;
+  isFollowingByCurrentUser: boolean;
+};
