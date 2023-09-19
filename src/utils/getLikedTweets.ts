@@ -9,12 +9,15 @@ export const likedTweets = Prisma.validator<Prisma.LikeDefaultArgs>()({
     },
   },
 });
-export const getLikedTweets = async (userId: string) => {
+export const getLikedTweets = async (
+  where: Prisma.LikeWhereInput,
+  currentUserId: string
+) => {
   "use server";
   try {
     const res = await db.like.findMany({
       where: {
-        LikedByUserId: userId,
+        ...where,
       },
       orderBy: {
         createdAt: "desc",
@@ -25,7 +28,9 @@ export const getLikedTweets = async (userId: string) => {
 
     const tweetsWithLikes = tweets.map((tweet) => ({
       ...tweet,
-      isLikedByCurrentUser: true,
+      isLikedByCurrentUser: tweet.likes.some(
+        (like) => like.LikedByUserId === currentUserId
+      ),
     }));
 
     return tweetsWithLikes;

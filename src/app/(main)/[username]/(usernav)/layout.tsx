@@ -112,7 +112,7 @@ export default async function Layout({
         </div>
       </div>
       <nav>
-        <Navigation />
+        <Navigation username={params.username} />
         {children}
       </nav>
     </div>

@@ -91,7 +91,7 @@ function ReplyDialog({
                   </div>
                   {/* main content of reply */}
                   <div>
-                    <div className=" flex flex-col  flex-1 text-white relative">
+                    <div className=" flex flex-col  flex-1 text-white relative"> 
                       <div className="w-full flex space-x-2 items-start p-2  ">
                         <div className="flex flex-col flex-1 w-12   basis-10 ">
                           <ProfileImages ImgUrl={props.auther.image} />

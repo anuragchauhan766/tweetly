@@ -4,13 +4,16 @@ import { AuthRequiredError } from "@/lib/exception";
 import { getUserTweets } from "@/utils/getUserTweets";
 
 import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 import React from "react";
 
 async function Posts({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
   const tweets = await getUserTweets(params.username, session.user.id);
-  if (!tweets) return null;
+  if (!tweets || tweets.length === 0) {
+    notFound();
+  }
   return (
     <div>
       {tweets.map((tweet) => (

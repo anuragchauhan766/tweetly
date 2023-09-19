@@ -11,11 +11,15 @@ import Link from "next/link";
 import { formatTimeRelative } from "@/helper/formatDate";
 
 function TweetCard(props: TweetCardProps) {
-  const { main } = props;
+  const { isOnTweetPage, isParentTweetwithReply } = props;
 
   return (
-    <div className="relative w-full border-b-[0.5px] border-gray-600">
-      {main !== true ? (
+    <div
+      className={`relative w-full ${
+        isParentTweetwithReply !== true ? "border-b-[0.5px]" : ""
+      } border-gray-600`}
+    >
+      {isOnTweetPage !== true ? (
         <Link
           href={`/${props.auther.username}/tweet/${props.id}`}
           className="absolute top-0 left-0  w-full h-full z-[4]"
@@ -25,16 +29,19 @@ function TweetCard(props: TweetCardProps) {
       ) : null}
 
       <div className="w-full flex space-x-2 items-start p-2 ">
-        {main !== true ? (
+        {isOnTweetPage !== true ? (
           <Link href={`/${props.auther.username as string}`} className="z-[10]">
             <ProfileImages ImgUrl={props.auther.image} />
           </Link>
+        ) : null}
+        {isParentTweetwithReply === true ? (
+          <div className="w-0.5 flex-1 bg-white/20   absolute top-4 left-6 h-full z-[-1]"></div>
         ) : null}
 
         <div className="w-full flex flex-col px-1 ">
           <div className="flex items-center justify-between mb-2">
             <div className="flex w-full  items-center justify-start gap-1 z-[10]">
-              {main === true ? (
+              {isOnTweetPage === true ? (
                 <Link
                   href={`/${props.auther.username as string}`}
                   className="mr-2"
@@ -46,7 +53,7 @@ function TweetCard(props: TweetCardProps) {
               <Link
                 href={`/${props.auther.username as string}`}
                 className={`flex items-start justify-center  ${
-                  main === true ? "flex-col gap-0" : "gap-2"
+                  isOnTweetPage === true ? "flex-col gap-0" : "gap-2"
                 }`}
               >
                 <div>
@@ -60,7 +67,7 @@ function TweetCard(props: TweetCardProps) {
                   </span>
                 </div>
               </Link>
-              {main !== true ? (
+              {isOnTweetPage !== true ? (
                 <>
                   {/* <BsDot className="text-gray-500" /> */}
                   <span className="text-gray-500 ">·</span>
@@ -84,7 +91,7 @@ function TweetCard(props: TweetCardProps) {
             </div>
             {/* <div className="w-full aspect-square rounded-2xl bg-slate-50 "></div> */}
           </div>
-          {main === true ? (
+          {isOnTweetPage === true ? (
             <div className="text-gray-400 font-light text-base border-b-[0.5px] border-gray-600">
               <div className="my-3">
                 <span className="hover:underline decoration-1 cursor-pointer ">
@@ -96,7 +103,7 @@ function TweetCard(props: TweetCardProps) {
 
           <div
             className={`flex  items-center w-full h-10 text-white/60 mt-1  ${
-              main === true ? "justify-around" : "justify-between "
+              isOnTweetPage === true ? "justify-around" : "justify-between "
             }`}
           >
             <Reply {...props} />

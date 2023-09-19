@@ -9,16 +9,16 @@ function findIndexByValue(obj: Record<string, string>, value: string) {
   return keys.findIndex((key) => obj[key] === value);
 }
 
-function Navigation() {
+function Navigation({ username }: { username: string }) {
   const { data: session, status } = useSession({
     required: true,
   });
   const pathname = usePathname();
   if (status === "loading") return null;
   const navItems = {
-    Posts: `/${session.user.username}`,
-    Replies: `/${session.user.username}/with_replies`,
-    Likes: `/${session.user.username}/likes`,
+    Posts: `/${username}`,
+    Replies: `/${username}/with_replies`,
+    Likes: `/${username}/likes`,
   };
   const selectedIndex = findIndexByValue(navItems, pathname);
   return (
@@ -32,6 +32,7 @@ function Navigation() {
                   <div className="w-full">
                     <Link
                       href={url}
+                      scroll={false}
                       className="w-full flex items-center justify-center p-2 hover:bg-white/10 px-5 outline-none"
                     >
                       <div
