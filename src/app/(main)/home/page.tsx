@@ -11,7 +11,7 @@ async function Home() {
   const session = await getServerSession(authOptions);
   if (!session) throw new AuthRequiredError();
 
-  const Tweets = await getHomeTimelineTweets(session.user.id);
+  const Tweets = await getHomeTimelineTweets(session.user.id, { take: 10 });
 
   return (
     <div className=" w-full">

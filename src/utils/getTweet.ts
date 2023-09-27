@@ -78,4 +78,4 @@ export const getTweet = async (tweetId: string, userId: string) => {
     throw error;
   }
 };
-// type UsersWithPosts = Prisma.PromiseReturnType<typeof getTweet>;
+

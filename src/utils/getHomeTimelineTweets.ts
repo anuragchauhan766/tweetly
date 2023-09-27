@@ -1,5 +1,6 @@
 import { db } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+
+import { Prisma, Tweet } from "@prisma/client";
 
 // queries for relation field and select field
 export const tweetsWithAutherAndLikes =
@@ -25,20 +26,81 @@ export const tweetsWithAutherAndLikes =
       },
     },
   });
-export const getHomeTimelineTweets = async (userId: string) => {
+export const getHomeTimelineTweets = async (
+  userId: string,
+  options: Prisma.TweetFindManyArgs
+) => {
   "use server";
+  let res;
   try {
-    const tweets = await db.tweet.findMany({
+    const user = await db.user.findUnique({
       where: {
-        isReply: false,
+        id: userId,
       },
-      orderBy: {
-        createdAt: "desc",
+      include: {
+        following: true,
       },
-      ...tweetsWithAutherAndLikes,
     });
+    if (user?.following.length === 0) {
+      res = await db.tweet.findMany({
+        take: options.take,
+        orderBy: {
+          createdAt: "desc",
+        },
 
-    const tweetsWithLikes = tweets.map((tweet) => ({
+        ...tweetsWithAutherAndLikes,
+      });
+    } else {
+      res = await db.tweet.findMany({
+        take: options.take,
+        where: {
+          OR: [
+            {
+              auther: {
+                follower: {
+                  some: {
+                    followerId: userId,
+                  },
+                },
+              },
+            },
+            {
+              likes: {
+                some: {
+                  LikedByUser: {
+                    follower: {
+                      some: {
+                        followerId: userId,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            {
+              replies: {
+                some: {
+                  auther: {
+                    follower: {
+                      some: {
+                        followerId: userId,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+
+        ...tweetsWithAutherAndLikes,
+      });
+    }
+
+    const tweetsWithLikes = res.map((tweet) => ({
       ...tweet,
       isLikedByCurrentUser: tweet.likes.some(
         (like) => like.LikedByUserId === userId

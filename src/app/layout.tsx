@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 import { NextAuthProvider } from "@/components/Auth/Provider";
+import { ReactQueryProvider } from "@/components/ReactQuery/Provider";
 
 export const metadata: Metadata = {
   title: "Twitter",
@@ -29,7 +30,9 @@ export default function RootLayout({
       </head>
 
       <body>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

@@ -40,7 +40,7 @@ function LikeButton(props: LikeProps) {
   return (
     <button
       // disabled={isPending}
-      className="flex items-center justify-center space-x-2 group/like cursor-pointer z-[10]"
+      className="flex items-center justify-center space-x-2 group/like cursor-pointer z-[8]"
       onClick={toggleLike}
     >
       <div className="p-3 rounded-full group-hover/like:bg-pink/20">

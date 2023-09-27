@@ -1,4 +1,5 @@
 "use client";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { handlefollow } from "@/utils/follow";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ function FollowButton(props: {
   isFollowing: boolean;
 }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isPending, startTransition] = useTransition();
   const [isFollowingByCurrentUser, setIsFollowingByCurrentUser] =
     experimental_useOptimistic(props.isFollowing);
@@ -21,6 +23,9 @@ function FollowButton(props: {
     // start transition for server request work
     startTransition(() => {
       handlefollow(props.currentUserId, props.userIdTofollow);
+      queryClient.invalidateQueries({
+        queryKey: ["whotofollow", props.currentUserId],
+      });
       router.refresh();
     });
   };

@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "static.toiimg.com",
       },
+      {
+        protocol: "https",
+        hostname: "cloudflare-ipfs.com",
+      },
     ],
   },
 };

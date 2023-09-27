@@ -9,6 +9,7 @@ import type { TweetCardProps } from "@/types/Tweet";
 import Reply from "./Reply";
 import Link from "next/link";
 import { formatTimeRelative } from "@/helper/formatDate";
+import DeleteButton from "./DeleteButton";
 
 function TweetCard(props: TweetCardProps) {
   const { isOnTweetPage, isParentTweetwithReply } = props;
@@ -78,11 +79,11 @@ function TweetCard(props: TweetCardProps) {
                 </>
               ) : null}
             </div>
-            <div>
-              <div className="relative group cursor-pointer">
-                <div className="absolute top-0 left-0 right-0 bottom-0 rounded-full p-4 hover:bg-blue/20 -m-2"></div>
-                <BsThreeDots className="group-hover:text-blue" />
-              </div>
+            <div className="z-10">
+              <DeleteButton
+                tweetId={props.id}
+                show={props.autherId === props.currentUserId}
+              />
             </div>
           </div>
           <div className="w-full space-y-2">
@@ -107,7 +108,7 @@ function TweetCard(props: TweetCardProps) {
             }`}
           >
             <Reply {...props} />
-            <div className="flex items-center justify-center space-x-2 group/retweet cursor-pointer z-[10]">
+            <div className="flex items-center justify-center space-x-2 group/retweet cursor-pointer z-[9]">
               <div className="p-3 rounded-full group-hover/retweet:bg-green/20">
                 <FaRetweet className="group-hover/retweet:text-green text-lg" />
               </div>
@@ -121,7 +122,7 @@ function TweetCard(props: TweetCardProps) {
               isLikedByCurrentUser={props.isLikedByCurrentUser}
             />
 
-            <div className="flex items-center justify-center space-x-2 group/share cursor-pointer z-[10]">
+            <div className="flex items-center justify-center space-x-2 group/share cursor-pointer z-[9]">
               <div className="p-3 rounded-full group-hover/share:bg-blue/20">
                 <FiShare className="group-hover/share:text-blue text-lg" />
               </div>

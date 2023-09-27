@@ -1,7 +1,8 @@
+"use server";
 import { db } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
-export const usersQueries = Prisma.validator<Prisma.UserDefaultArgs>()({
+const usersQueries = Prisma.validator<Prisma.UserDefaultArgs>()({
   include: {
     follower: {
       select: {
@@ -10,7 +11,10 @@ export const usersQueries = Prisma.validator<Prisma.UserDefaultArgs>()({
     },
   },
 });
-export const getUsers = async (currentUserId: string) => {
+export const getUsers = async (
+  currentUserId: string,
+  options: { page: number; take: number }
+) => {
   try {
     const users = await db.user.findMany({
       where: {
@@ -22,6 +26,8 @@ export const getUsers = async (currentUserId: string) => {
           },
         },
       },
+      skip: (options.page - 1) * options.take,
+      take: options.take,
       ...usersQueries,
     });
     const userswithfollowers = users.map((user) => ({
