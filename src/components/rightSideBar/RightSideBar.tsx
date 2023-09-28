@@ -14,7 +14,7 @@ async function RightSideBar() {
 
   return (
     <div className="w-full flex-1 h-screen self-start  sticky   top-0">
-      <div className="flex flex-col w-full h-screen space-y-4 sticky bottom-50 overflow-y-auto no-scrollbar">
+      <div className="flex flex-col w-full h-screen space-y-4 overflow-y-auto no-scrollbar">
         {/* search bar */}
         <div className="flex items-center justify-center w-full sticky top-0 bg-black py-1 z-[100]">
           <form action="#" className="w-full">
@@ -47,7 +47,7 @@ async function RightSideBar() {
 
         <WhoToFollow session={session} />
 
-        <div className="flex items-center justify-center w-full text-sm font-thin text-gray-500">
+        <div className="flex items-center justify-center w-full text-sm font-thin text-gray-50 pb-20">
           <span>Created by Anurag Singh Chauhan</span>
         </div>
       </div>

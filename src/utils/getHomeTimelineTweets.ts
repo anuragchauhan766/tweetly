@@ -1,36 +1,11 @@
+"use server";
+import { tweetsWithAutherAndLikes } from "@/utils/Queries/tweet";
 import { db } from "@/lib/prisma";
 
-import { Prisma, Tweet } from "@prisma/client";
-
-// queries for relation field and select field
-export const tweetsWithAutherAndLikes =
-  Prisma.validator<Prisma.TweetDefaultArgs>()({
-    include: {
-      _count: {
-        select: {
-          likes: true,
-          replies: true,
-        },
-      },
-      likes: {
-        select: {
-          LikedByUserId: true,
-        },
-      },
-      auther: {
-        select: {
-          username: true,
-          image: true,
-          name: true,
-        },
-      },
-    },
-  });
 export const getHomeTimelineTweets = async (
   userId: string,
-  options: Prisma.TweetFindManyArgs
+  options: { take: number; page: number }
 ) => {
-  "use server";
   let res;
   try {
     const user = await db.user.findUnique({
@@ -53,6 +28,7 @@ export const getHomeTimelineTweets = async (
     } else {
       res = await db.tweet.findMany({
         take: options.take,
+        skip: (options.page - 1) * options.take,
         where: {
           OR: [
             {

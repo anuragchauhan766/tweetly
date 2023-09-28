@@ -1,11 +1,7 @@
 "use client";
 import { getUsers } from "@/utils/getUsers";
 import { Session } from "next-auth";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import ProfileCard from "./ProfileCard";
 import React from "react";
 import LoadingSpinner from "../common/button/LoadingSpinner";
@@ -21,7 +17,9 @@ function WhoToFollow(props: { session: Session }) {
         });
         return res;
       },
-      getNextPageParam: (_, pages) => pages.length + 1,
+      getNextPageParam: (lastpage, pages) => {
+        return lastpage?.length === 0 ? undefined : pages.length + 1;
+      },
     });
 
   return (
@@ -47,7 +45,6 @@ function WhoToFollow(props: { session: Session }) {
           type="button"
           className="w-full grid place-items-center h-full text-blue"
           onClick={() => {
-            console.log("fetch");
             fetchNextPage();
           }}
           disabled={!hasNextPage || isFetchingNextPage}

@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-import { BsThreeDots } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import moment from "moment";
@@ -24,6 +24,7 @@ function TweetCard(props: TweetCardProps) {
         <Link
           href={`/${props.auther.username}/tweet/${props.id}`}
           className="absolute top-0 left-0  w-full h-full z-[4]"
+          scroll={false}
         >
           <span className="hidden"></span>
         </Link>

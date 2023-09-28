@@ -1,4 +1,4 @@
-import { tweetsWithAutherAndLikes } from "@/utils/getHomeTimelineTweets";
+import { tweetsWithAutherAndLikes } from "@/utils/Queries/tweet";
 import {
   RepliesWithParentTweetQueries,
   getRepliesWithParentTweet,

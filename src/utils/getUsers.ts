@@ -18,13 +18,16 @@ export const getUsers = async (
   try {
     const users = await db.user.findMany({
       where: {
-        NOT: {
-          follower: {
-            some: {
-              followerId: currentUserId,
+        NOT: [
+          { id: currentUserId },
+          {
+            follower: {
+              some: {
+                followerId: currentUserId,
+              },
             },
           },
-        },
+        ],
       },
       skip: (options.page - 1) * options.take,
       take: options.take,

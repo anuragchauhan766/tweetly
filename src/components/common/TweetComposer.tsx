@@ -6,18 +6,11 @@ import SubmitButton from "./button/SubmitButton";
 import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { AuthRequiredError } from "@/lib/exception";
+import { Session } from "next-auth";
 
-function TweetComposer() {
-  const { data: session, status } = useSession({
-    required: true,
-  });
+function TweetComposer(props: { session: Session }) {
   const [input, setInput] = useState("");
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
-
-  if (status === "loading") {
-    // to be improve
-    return <div>Loading</div>;
-  }
 
   async function action(data: FormData) {
     const res = await submitTweet(data);
@@ -29,7 +22,7 @@ function TweetComposer() {
   }
   return (
     <div className="w-full  h-fit border-t-[0.5px] border-b-[0.5px] border-gray-600 px-4 flex items-center pt-4 space-x-2">
-      <ProfileImages ImgUrl={session.user.image} />
+      <ProfileImages ImgUrl={props.session.user.image} />
       <form
         className="w-full h-fit  flex flex-col justify-start items-center"
         action={action}

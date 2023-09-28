@@ -1,6 +1,6 @@
 import { db } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
-import { tweetsWithAutherAndLikes } from "./getHomeTimelineTweets";
+import { tweetsWithAutherAndLikes } from "./Queries/tweet";
 // queries for relation field and select field
 export const likedTweets = Prisma.validator<Prisma.LikeDefaultArgs>()({
   select: {
