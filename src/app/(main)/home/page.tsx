@@ -4,8 +4,6 @@ import { authOptions } from "@/lib/auth";
 import { AuthRequiredError } from "@/lib/exception";
 
 import { getServerSession } from "next-auth";
-import { Suspense } from "react";
-import Loading from "./loading";
 
 async function Home() {
   const session = await getServerSession(authOptions);
