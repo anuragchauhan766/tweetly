@@ -14,7 +14,8 @@ async function Home() {
       <div className="w-full h-12 font-bold text-xl p-4 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 z-50">
         Home
       </div>
-      <TweetComposer session={session} />
+
+      <TweetComposer session={session} id="main_input_file_composer" />
 
       <Timeline session={session} />
     </div>

@@ -20,6 +20,7 @@
     "incremental": true,
     "declaration": true,
     "declarationDir": "src/types",
+    "downlevelIteration": true,
     "plugins": [
       {
         "name": "next"
@@ -42,8 +43,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/types/next-auth.d.ts",
-    "src/types/**/*.d.ts"
-, "prisma/seed.js"  ],
+    "src/types/**/*.d.ts",
+    "prisma/seed.js"
+  ],
   "exclude": [
     "node_modules"
   ]

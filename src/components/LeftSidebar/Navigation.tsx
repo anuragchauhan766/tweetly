@@ -54,7 +54,7 @@ function Navigation(props: { session: Session }) {
     if (path === "/" && pathname !== path) {
       return false;
     }
-    console.log(path, pathname);
+
     return pathname.startsWith(path);
   };
 

@@ -10,6 +10,7 @@ import Reply from "./Reply";
 import Link from "next/link";
 import { formatTimeRelative } from "@/helper/formatDate";
 import DeleteButton from "./DeleteButton";
+import Image from "next/image";
 
 function TweetCard(props: TweetCardProps) {
   const { isOnTweetPage, isParentTweetwithReply } = props;
@@ -91,7 +92,18 @@ function TweetCard(props: TweetCardProps) {
             <div className=" w-full ">
               <p className="whitespace-pre-wrap">{props.content}</p>
             </div>
-            {/* <div className="w-full aspect-square rounded-2xl bg-slate-50 "></div> */}
+            {props.media && (
+              <div className="relative w-full aspect-auto rounded-2xl mb-2">
+                <Image
+                  src={props.media}
+                  alt="tweet_post"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="rounded-2xl w-full h-auto object-contain"
+                />
+              </div>
+            )}
           </div>
           {isOnTweetPage === true ? (
             <div className="text-gray-400 font-light text-base border-b-[0.5px] border-gray-600">

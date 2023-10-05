@@ -1,19 +1,13 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef, useState } from "react";
+import { Fragment } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-
 import moment from "moment";
 import { TweetCardProps } from "@/types/Tweet";
 import { BsDot } from "react-icons/bs";
 import { useSession } from "next-auth/react";
-import { submitTweet } from "@/utils/submitTweet";
-import { AuthRequiredError } from "@/lib/exception";
-import autoheight from "@/helper/autoheight";
-
 import ProfileImages from "../common/ProfileImages";
-import SubmitButton from "../common/button/SubmitButton";
-import { redirect } from "next/dist/server/api-utils";
+import TweetComposer from "../common/TweetComposer";
 
 function ReplyDialog({
   isOpen,
@@ -27,27 +21,13 @@ function ReplyDialog({
   const { data: session, status } = useSession({
     required: true,
   });
-  const [input, setInput] = useState("");
-
-  const textareaRef = useRef<null | HTMLTextAreaElement>(null);
   if (status === "loading") return null;
-  async function action(data: FormData) {
-    const res = await submitTweet(data, {
-      isReply: true,
-      parentTweetId: props.id,
-    });
-    if (res?.error) {
-      console.log(res.error);
-    }
-    setInput("");
-    setIsOpen(false);
-    if (textareaRef.current) textareaRef.current.style.height = "56px";
-  }
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10 "
+        className="relative z-[100] "
         onClose={() => setIsOpen(false)}
       >
         <Transition.Child
@@ -91,7 +71,7 @@ function ReplyDialog({
                   </div>
                   {/* main content of reply */}
                   <div>
-                    <div className=" flex flex-col  flex-1 text-white relative"> 
+                    <div className=" flex flex-col  flex-1 text-white relative">
                       <div className="w-full flex space-x-2 items-start p-2  ">
                         <div className="flex flex-col flex-1 w-12   basis-10 ">
                           <ProfileImages ImgUrl={props.auther.image} />
@@ -139,36 +119,13 @@ function ReplyDialog({
                     </div>
                     {/* reply box */}
                     <div>
-                      <div className="w-full  h-fit   p-2 flex items-center pt-4 space-x-2">
-                        <ProfileImages ImgUrl={session.user.image} />
-                        <form
-                          className="w-full h-fit  flex flex-col justify-start items-center"
-                          action={action}
-                        >
-                          <div className="w-full  h-fit ">
-                            <textarea
-                              ref={textareaRef}
-                              className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden p-2 pb-0"
-                              placeholder="Post Your Reply"
-                              name="tweetText"
-                              onChange={(e) => {
-                                autoheight(e, "56px", 8);
-                                setInput(e.target.value);
-                              }}
-                              value={input}
-                              rows={2}
-                            ></textarea>
-                          </div>
-                          <div className="w-full h-16 flex items-center justify-end sticky bottom-0">
-                            {/* <div></div> */}
-                            <div className="w-full max-w-[100px] text-white">
-                              <SubmitButton disabled={!input.trim()}>
-                                Reply
-                              </SubmitButton>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+                      <TweetComposer
+                        session={session}
+                        key="reply-box"
+                        replybox={true}
+                        id="repy-box-file-input-composer"
+                        parentTweetId={props.id}
+                      />
                     </div>
                   </div>
                 </div>

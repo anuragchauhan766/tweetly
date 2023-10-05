@@ -32,7 +32,6 @@ function Navigation({ username }: { username: string }) {
                   <div className="w-full">
                     <Link
                       href={url}
-                      scroll={false}
                       className="w-full flex items-center justify-center p-2 hover:bg-white/10 px-5 outline-none"
                     >
                       <div

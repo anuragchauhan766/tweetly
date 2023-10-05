@@ -32,7 +32,7 @@ function DeleteButton(props: DeleteButtonProps) {
               leaveTo="transform scale-95 opacity-0"
             >
               <Popover.Panel className="absolute z-[100] top-1 -right-2 w-64 origin-top-right   rounded-lg ring-1 ring-black ring-opacity-5 focus:outline-none shadow-custom bg-black after:block">
-                <button
+                <Popover.Button
                   onClick={() => {
                     deleteTweet(props.tweetId);
                     router.refresh();
@@ -46,7 +46,7 @@ function DeleteButton(props: DeleteButtonProps) {
                   <div className="col-span-4">
                     <span>Delete</span>
                   </div>
-                </button>
+                </Popover.Button>
               </Popover.Panel>
             </Transition>
           )}
