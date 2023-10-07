@@ -8,6 +8,7 @@ import { Session } from "next-auth";
 import { HiOutlinePhoto } from "react-icons/hi2";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
+import { useQueryClient } from "@tanstack/react-query";
 type propsType =
   | {
       session: Session;
@@ -24,21 +25,22 @@ type propsType =
 
 function TweetComposer(props: propsType) {
   const [input, setInput] = useState("");
+  const queryClient = useQueryClient();
+
   const [imagesrc, setImagesrc] = useState<string | null>(null);
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
   const [inputFile, setInputFile] = useState("");
 
   async function action(data: FormData) {
-    const res = await (props.replybox
+    await (props.replybox
       ? submitTweet(data, {
           isReply: true,
           parentTweetId: props.parentTweetId,
         })
       : submitTweet(data));
-
-    if (res?.error) {
-      console.log(res.error);
-    }
+    queryClient.invalidateQueries({
+      queryKey: ["timeline", props.session.user.id],
+    });
 
     setInput("");
     setImagesrc(null);
