@@ -26,6 +26,7 @@ function Timeline(props: { session: Session }) {
     if (inView) {
       fetchNextPage();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
   if (status === "loading") {
     return (

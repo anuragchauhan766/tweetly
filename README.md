@@ -1,34 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Twitter Clone (x.com) - Next.js
+
+![GitHub repo size](https://img.shields.io/github/repo-size/anuragchauhan766/twitter-clone)
+![GitHub stars](https://img.shields.io/github/stars/anuragchauhan766/twitter-clone)
+![GitHub forks](https://img.shields.io/github/forks/anuragchauhan766/twitter-clone)
+
+A Twitter clone made with Next.js that includes the most recent capabilities and technologies. This project seeks to imitate the Twitter experience, providing users with a familiar environment while also introducing a few new features. It was created during a two-month period with the primary goal of studying and comprehending the workings of social and large-scale applications. The project is intended to be completely responsive to all screen sizes.
+
+## Features
+
+- **Tweet Posting**: Users can post tweets with either text or images, just like on Twitter.
+
+- **Follow Users**: Users have the ability to follow other people, allowing them to see their tweets and updates on their timeline.
+
+- **Reply and Like**: Users can engage with tweets by replying to them and liking them, promoting interaction within the community.
+
+- **User Profiles**: Each user has their own profile where they can view their details and activity. Users can also explore the profiles of others to learn more about them.
+
+- **Login Authentication**: To access the app and its content, users are required to log in using either their Google or GitHub accounts. This ensures a secure and personalized experience.
+
+- **Delete Tweet**: Users have the ability to delete their tweets by clicking on the 3 dots on upper right corner of tweet.
+
+## Tech Stack
+
+- **Supabase**: Utilizing Supabase for database management (PostgreSQL) and storage for images. This robust backend solution ensures data reliability and efficient image storage.
+
+- **Prisma**: Employing Prisma as the database ORM for seamless interaction with the database.
+
+- **TypeScript**: Using TypeScript for type safety and improved code quality.
+
+- **Next.js 13**: Leveraging the latest version of Next.js for building a performant and modern web application.
 
 ## Getting Started
 
-First, run the development server:
+To get started with this project, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. Clone the repository: `git clone https://github.com/anuragchauhan766/twitter-clone.git`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies: `npm install`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up the environment variables for Supabase and other configurations.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Run the development server: `npm run dev`
 
-## Learn More
+5. Access the application in your browser at [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the [MIT License](LICENSE).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Thank you for checking out the Twitter Clone (x.com) built with Next.js! We hope you enjoy using it and welcome any feedback or contributions to make it even better. Happy tweeting!

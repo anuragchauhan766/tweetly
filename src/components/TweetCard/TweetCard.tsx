@@ -131,7 +131,7 @@ function TweetCard(props: TweetCardProps) {
               <div className="p-3 rounded-full group-hover/retweet:bg-green/20">
                 <FaRetweet className="group-hover/retweet:text-green text-lg" />
               </div>
-              <span className="group-hover/retweet:text-green text-sm">4</span>
+              <span className="group-hover/retweet:text-green text-sm">0</span>
             </div>
 
             <LikeButton
