@@ -17,7 +17,7 @@ export const getHomeTimelineTweets = async (
       },
     });
     if (user?.following.length === 0) {
-      console.log("random");
+    
       res = await db.tweet.findMany({
         take: options.take,
         orderBy: {
@@ -27,7 +27,7 @@ export const getHomeTimelineTweets = async (
         ...tweetsWithAutherAndLikes,
       });
     } else {
-      console.log("following");
+     
 
       res = await db.tweet.findMany({
         take: options.take,

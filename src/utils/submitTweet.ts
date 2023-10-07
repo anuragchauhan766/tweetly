@@ -4,7 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { Tweetschema } from "@/validationSchema/tweet";
+
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 
 type optionsTypes =
@@ -34,9 +34,6 @@ export const submitTweet = async (
         message: "Tweet connot be empty",
       };
     const url = await uploadFile(session.user.id, file as File);
-
-    const error = Tweetschema.safeParse({ content: tweetContent?.toString() });
-    if (!error.success) return { error: error.error.format() };
 
     await db.tweet.create({
       data: {
