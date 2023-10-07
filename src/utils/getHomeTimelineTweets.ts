@@ -6,7 +6,7 @@ export const getHomeTimelineTweets = async (
   userId: string,
   options: { take: number; page: number }
 ) => {
-  let res;
+  let res: any[] = [];
   try {
     const user = await db.user.findUnique({
       where: {
@@ -17,6 +17,7 @@ export const getHomeTimelineTweets = async (
       },
     });
     if (user?.following.length === 0) {
+      console.log("random");
       res = await db.tweet.findMany({
         take: options.take,
         orderBy: {
@@ -26,6 +27,8 @@ export const getHomeTimelineTweets = async (
         ...tweetsWithAutherAndLikes,
       });
     } else {
+      console.log("following");
+
       res = await db.tweet.findMany({
         take: options.take,
         skip: (options.page - 1) * options.take,
@@ -75,11 +78,28 @@ export const getHomeTimelineTweets = async (
         ...tweetsWithAutherAndLikes,
       });
     }
-
-    const tweetsWithLikes = res.map((tweet) => ({
+    const userOwnTweets = await db.tweet.findMany({
+      where: {
+        autherId: userId,
+      },
+      take: options.take,
+      skip: (options.page - 1) * options.take,
+      orderBy: {
+        createdAt: "desc",
+      },
+      ...tweetsWithAutherAndLikes,
+    });
+    const allTweets = [...res, ...userOwnTweets];
+    const uniqueTweets = Array.from(
+      new Set(allTweets.map((tweet) => tweet.id))
+    ).map((id) => allTweets.find((tweet) => tweet.id === id));
+    const sortedTweets = uniqueTweets.sort((a, b) =>
+      a.createdAt > b.createdAt ? -1 : 1
+    );
+    const tweetsWithLikes = sortedTweets.map((tweet) => ({
       ...tweet,
       isLikedByCurrentUser: tweet.likes.some(
-        (like) => like.LikedByUserId === userId
+        (like: any) => like.LikedByUserId === userId
       ),
     }));
 
