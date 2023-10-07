@@ -14,6 +14,7 @@ export type TweetCardProps = TweetsWithAutherAndLikes & {
   isLikedByCurrentUser: boolean;
   isOnTweetPage?: boolean;
   isParentTweetwithReply?: boolean;
+  pageNumber?: number;
 };
 export type LikeHandler = ({
   userId,

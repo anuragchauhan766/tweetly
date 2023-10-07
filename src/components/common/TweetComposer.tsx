@@ -56,13 +56,14 @@ function TweetComposer(props: propsType) {
   };
   return (
     <div
-      className={`w-full  h-fit   flex items-center pt-4 space-x-2 ${
-        props.replybox
-          ? "p-2"
-          : "border-t-[0.5px] border-b-[0.5px] border-gray-600 px-4"
+      className={`w-full  h-fit flex items-center pt-4 space-x-2 ${
+        props.replybox ? "p-2 flex" : " border-b-[0.5px] border-gray-600 px-4"
       }`}
     >
-      <ProfileImages ImgUrl={props.session.user.image} />
+      <ProfileImages
+        ImgUrl={props.session.user.image}
+        className="w-10 h-10 xs:w-12 xs:h-12"
+      />
       <form
         className="w-full h-fit  flex flex-col justify-start items-center"
         action={action}
@@ -122,7 +123,7 @@ function TweetComposer(props: propsType) {
               onChange={handleFileInputChange}
             />
           </div>
-          <div className="w-full max-w-[100px]">
+          <div className="w-full max-w-[100px] text-white">
             <SubmitButton disabled={!(input.trim() || imagesrc)}>
               Post
             </SubmitButton>

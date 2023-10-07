@@ -29,7 +29,7 @@ export default function RootLayout({
         />
       </head>
 
-      <body>
+      <body className="lg:scrollbar-stable">
         <NextAuthProvider>
           <ReactQueryProvider>{children}</ReactQueryProvider>
         </NextAuthProvider>

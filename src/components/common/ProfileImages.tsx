@@ -15,7 +15,7 @@ function ProfileImages({
 
   return (
     <div
-      className={`relative rounded-full w-12 h-12 bg-transparent self-start flex-none border-2 border-black  ${className}`}
+      className={`relative rounded-full  bg-transparent self-start flex-none border-2 border-black  ${className}`}
     >
       <Image
         src={newUrl}

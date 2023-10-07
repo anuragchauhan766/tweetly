@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 
 export const toggleLikeHandler: LikeHandler = async ({ userId, tweetId }) => {
   try {
+    
     const res = await db.like.findUnique({
       where: {
         LikeUniqueId: {

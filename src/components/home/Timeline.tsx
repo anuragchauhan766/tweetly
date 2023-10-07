@@ -41,6 +41,7 @@ function Timeline(props: { session: Session }) {
           {page?.map((tweet) => {
             const tweetCardProps: TweetCardProps = {
               ...tweet,
+              pageNumber: i,
               currentUserId: props.session.user.id,
             };
 

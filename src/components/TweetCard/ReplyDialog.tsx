@@ -2,12 +2,13 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import moment from "moment";
+
 import { TweetCardProps } from "@/types/Tweet";
 import { BsDot } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import ProfileImages from "../common/ProfileImages";
 import TweetComposer from "../common/TweetComposer";
+import { formatTimeRelative } from "@/helper/formatDate";
 
 function ReplyDialog({
   isOpen,
@@ -42,8 +43,8 @@ function ReplyDialog({
           <div className="fixed inset-0 bg-light-gray " />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto   h-screen">
-          <div className="flex  justify-center items-start p-10 text-center   h-full">
+        <div className="fixed inset-0 overflow-y-auto w-full  h-screen">
+          <div className="flex  justify-center items-start xs:p-10 text-center   h-full">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -55,10 +56,10 @@ function ReplyDialog({
             >
               {/* Dialog box  */}
               <Dialog.Panel
-                className="w-full max-w-screen-sm max-h-[90vh]  h-fit transform overflow-hidden rounded-2xl bg-black pl-2 text-left align-middle shadow-xl transition-all flex flex-col gap-3"
+                className="w-full max-w-screen-sm h-full xs:max-h-[90vh]  xs:h-fit transform overflow-hidden xs:rounded-2xl bg-black pl-2 text-left align-middle shadow-xl transition-all flex flex-col gap-3"
                 as="div"
               >
-                <div className="overflow-auto">
+                <div className="overflow-auto h-full">
                   {/* Close button */}
                   <div className=" flex items-center sticky top-0 backdrop-blur-sm bg-black/50 z-[10] p-2">
                     <button
@@ -67,35 +68,44 @@ function ReplyDialog({
                     >
                       <AiOutlineClose className=" fill-white w-6 h-6" />
                     </button>
-                    <div className="flex-1"></div>
+                    <div className="flex-1 text-white ml-2">
+                      <span>Reply</span>
+                    </div>
                   </div>
                   {/* main content of reply */}
-                  <div>
+                  <div className="h-full">
                     <div className=" flex flex-col  flex-1 text-white relative">
                       <div className="w-full flex space-x-2 items-start p-2  ">
                         <div className="flex flex-col flex-1 w-12   basis-10 ">
-                          <ProfileImages ImgUrl={props.auther.image} />
+                          <ProfileImages
+                            ImgUrl={props.auther.image}
+                            className="w-10 h-10 xs:w-12 xs:h-12"
+                          />
 
                           {/* relation div */}
-                          <div className="w-0.5 flex-1 bg-white/20   absolute top-4 left-8 h-full z-[-1]"></div>
+                          <div className="w-0.5 flex-1 bg-white/20   absolute top-4 left-7 xs:left-8 h-full z-[-1]"></div>
                         </div>
 
                         <div className="w-full flex flex-col px-2 space-y-2">
                           <div className="flex items-center justify-between">
-                            <div className="flex w-full space-x-1 items-center justify-start ">
-                              <span className="font-bold ">
-                                {props.auther.name}
-                              </span>
-                              <span className="font-thin text-gray-500">
-                                @{props.auther.username}
-                              </span>
+                            <div className="flex items-start justify-center flex-col  xs:flex-row gap-0 xs:gap-2">
+                              <div>
+                                <span className="font-bold hover:underline decoration-1 ">
+                                  {props.auther.name}
+                                </span>
+                              </div>
+                              <div className="flex items-center justify-center space-x-1">
+                                <span className="font-thin text-gray-500 text-base">
+                                  @{props.auther.username}
+                                </span>
 
-                              <BsDot className="text-gray-500" />
-
-                              <span className="font-thin text-gray-500 hover:underline">
-                                {/* to be upgraded to absolute after a day */}
-                                {moment(props.createdAt).fromNow()}
-                              </span>
+                                <div className="space-x-1">
+                                  <span className="text-gray-500 ">·</span>
+                                  <span className="font-thin text-gray-500 hover:underline">
+                                    {formatTimeRelative(props.createdAt)}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="w-full space-y-2">
@@ -118,7 +128,7 @@ function ReplyDialog({
                       </div>
                     </div>
                     {/* reply box */}
-                    <div>
+                    <div className="h-full">
                       <TweetComposer
                         session={session}
                         key="reply-box"

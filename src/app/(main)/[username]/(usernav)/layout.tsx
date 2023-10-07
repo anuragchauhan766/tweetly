@@ -28,11 +28,11 @@ export default async function Layout({
   return (
     <div className=" w-full">
       {/* top header bar */}
-      <div className="w-full  font-bold text-xl p-1 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 gap-6 ps-2 z-50">
+      <div className="w-full  font-bold text-base xs:text-xl p-1 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 gap-6 ps-2 z-50">
         <GoBackButton />
         <div className="flex flex-col items-start justify-center">
           <span className="font-bold">{userProfile.name}</span>
-          <span className="font-light text-gray-500 text-base">
+          <span className="font-light text-gray-500 text-xs">
             {userProfile._count.tweets} Posts
           </span>
         </div>
@@ -57,7 +57,7 @@ export default async function Layout({
                 <ProfileImages
                   ImgUrl={userProfile.image}
                   ImgSize="200"
-                  className="w-32 h-32 min-w-[40px] border-4"
+                  className="w-24 h-24 xs:w-32 xs:h-32 min-w-[40px] border-2 xs:border-4"
                 />
               </div>
             </div>
@@ -118,8 +118,8 @@ export default async function Layout({
       </div>
       <nav>
         <Navigation username={params.username} />
-        {children}
       </nav>
+      <div className="mb-16">{children}</div>
     </div>
   );
 }

@@ -10,6 +10,7 @@ interface DeleteButtonProps {
 }
 function DeleteButton(props: DeleteButtonProps) {
   const router = useRouter();
+
   return (
     <Popover className="relative z-10">
       {({ open }) => (
@@ -33,6 +34,7 @@ function DeleteButton(props: DeleteButtonProps) {
             >
               <Popover.Panel className="absolute z-[100] top-1 -right-2 w-64 origin-top-right   rounded-lg ring-1 ring-black ring-opacity-5 focus:outline-none shadow-custom bg-black after:block">
                 <Popover.Button
+                  type="button"
                   onClick={() => {
                     deleteTweet(props.tweetId);
                     router.refresh();

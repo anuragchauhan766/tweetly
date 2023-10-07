@@ -13,7 +13,7 @@ async function RightSideBar() {
   const data = await getNews();
 
   return (
-    <div className="w-full flex-1 h-screen self-start  sticky   top-0">
+    <div className="hidden lg:block w-full flex-1 h-screen self-start  sticky   top-0">
       <div className="flex flex-col w-full h-screen space-y-4 overflow-y-auto no-scrollbar">
         {/* search bar */}
         <div className="flex items-center justify-center w-full sticky top-0 bg-black py-1 z-[100]">

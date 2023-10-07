@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+const defaultTheme = require("tailwindcss/defaultTheme");
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -23,9 +23,15 @@ const config: Config = {
       boxShadow: {
         custom:
           "0px 0px 15px rgba(255, 255, 255, 0.2) ,0px 0px 3px 1px rgba(255, 255, 255, 0.15)",
-        "custom-triangle":
+        "custom-triangle-lower":
           "2px 2px 5px -3px rgba(255, 255, 255, 0.2) ,2px 2px 3px -2px rgba(255, 255, 255, 0.15)",
+        "custom-triangle-upper":
+          "-2px -2px 5px -2px rgba(255, 255, 255, 0.2) ,-2px -2px 3px -1px rgba(255, 255, 255, 0.15)",
       },
+    },
+    screens: {
+      xs: "510px",
+      ...defaultTheme.screens,
     },
   },
   plugins: [],

@@ -1,19 +1,20 @@
 "use client";
+import { Session } from "next-auth";
+import { usePathname } from "next/navigation";
+import React from "react";
 import { BiHomeCircle, BiSolidHomeCircle } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import Link from "next/link";
+
 import {
-  IoMail,
-  IoMailOutline,
   IoNotifications,
   IoNotificationsOutline,
   IoPerson,
   IoPersonOutline,
 } from "react-icons/io5";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { Session } from "next-auth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
+import { GiFeather } from "react-icons/gi";
+import ComposeTweet from "../common/button/ComposeTweet";
 
 const NAVIGATION_ITEMS = [
   {
@@ -32,22 +33,12 @@ const NAVIGATION_ITEMS = [
     activeIcon: IoNotifications,
   },
   {
-    title: "Messages",
-    icon: IoMailOutline,
-    activeIcon: IoMail,
-  },
-  {
-    title: "Bookmarks",
-    icon: BsBookmark,
-    activeIcon: BsBookmarkFill,
-  },
-  {
     title: "Profile",
     icon: IoPersonOutline,
     activeIcon: IoPerson,
   },
 ];
-function Navigation(props: { session: Session }) {
+function MobileBar(props: { session: Session }) {
   const pathname = usePathname();
 
   const isActivePath = (path: string) => {
@@ -57,9 +48,8 @@ function Navigation(props: { session: Session }) {
 
     return pathname.startsWith(path);
   };
-
   return (
-    <nav className="w-full flex flex-col space-y-2">
+    <nav className="fixed bottom-0 left-0 right-0 w-full flex xs:hidden flex-row items-center justify-around space-y-2 bg-black h-16 z-[50]">
       {NAVIGATION_ITEMS.map(({ title, icon: Icon, activeIcon: ActiveIcon }) => (
         <Link
           href={`/${
@@ -87,8 +77,11 @@ function Navigation(props: { session: Session }) {
           </div>
         </Link>
       ))}
+      <div className="fixed bottom-20 right-5 flex items-center justify-center ">
+        <ComposeTweet ClassName="w-8 h-8" />
+      </div>
     </nav>
   );
 }
 
-export default Navigation;
+export default MobileBar;

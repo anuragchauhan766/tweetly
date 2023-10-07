@@ -16,7 +16,7 @@ async function With_replies({ params }: { params: { username: string } }) {
     notFound();
   }
   return (
-    <div>
+    <div className="mb-16">
       {tweets.map((tweet) => (
         <Reply_Pair key={tweet.id} {...tweet} />
       ))}

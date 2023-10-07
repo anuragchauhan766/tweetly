@@ -34,7 +34,10 @@ function TweetCard(props: TweetCardProps) {
       <div className="w-full flex space-x-2 items-start p-2 ">
         {isOnTweetPage !== true ? (
           <Link href={`/${props.auther.username as string}`} className="z-[10]">
-            <ProfileImages ImgUrl={props.auther.image} />
+            <ProfileImages
+              ImgUrl={props.auther.image}
+              className="w-10 h-10 xs:w-12 xs:h-12"
+            />
           </Link>
         ) : null}
         {isParentTweetwithReply === true ? (
@@ -49,37 +52,40 @@ function TweetCard(props: TweetCardProps) {
                   href={`/${props.auther.username as string}`}
                   className="mr-2"
                 >
-                  <ProfileImages ImgUrl={props.auther.image} />
+                  <ProfileImages
+                    ImgUrl={props.auther.image}
+                    className="w-12 h-12"
+                  />
                 </Link>
               ) : null}
 
               <Link
                 href={`/${props.auther.username as string}`}
-                className={`flex items-start justify-center  ${
-                  isOnTweetPage === true ? "flex-col gap-0" : "gap-2"
+                className={`flex items-start justify-center flex-col xs:flex-row gap-0 xs:gap-2 ${
+                  isOnTweetPage === true ? "flex-col gap-0" : ""
                 }`}
               >
                 <div>
-                  <span className="font-bold hover:underline decoration-1">
+                  <span className="font-bold hover:underline decoration-1 ">
                     {props.auther.name}
                   </span>
                 </div>
-                <div>
+                <div className="flex items-center justify-center space-x-1">
                   <span className="font-thin text-gray-500 text-base">
                     @{props.auther.username}
                   </span>
+                  {isOnTweetPage !== true ? (
+                    <div className="space-x-1">
+                      {/* <BsDot className="text-gray-500" /> */}
+                      <span className="text-gray-500 ">·</span>
+                      <span className="font-thin text-gray-500 hover:underline">
+                        {/* to be upgraded to absolute after a day */}
+                        {formatTimeRelative(props.createdAt)}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
               </Link>
-              {isOnTweetPage !== true ? (
-                <>
-                  {/* <BsDot className="text-gray-500" /> */}
-                  <span className="text-gray-500 ">·</span>
-                  <span className="font-thin text-gray-500 hover:underline">
-                    {/* to be upgraded to absolute after a day */}
-                    {formatTimeRelative(props.createdAt)}
-                  </span>
-                </>
-              ) : null}
             </div>
             <div className="z-10">
               <DeleteButton
@@ -133,6 +139,7 @@ function TweetCard(props: TweetCardProps) {
               tweetId={props.id}
               LikeCount={props._count.likes}
               isLikedByCurrentUser={props.isLikedByCurrentUser}
+              pageNumber={props.pageNumber}
             />
 
             <div className="flex items-center justify-center space-x-2 group/share cursor-pointer z-[9]">
