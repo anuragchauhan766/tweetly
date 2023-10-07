@@ -11,6 +11,7 @@ import { BiCalendar } from "react-icons/bi";
 import moment from "moment";
 import Navigation from "@/components/UserPage/Navigation";
 import Link from "next/link";
+
 export default async function Layout({
   children,
   params,
@@ -25,6 +26,11 @@ export default async function Layout({
   if (!userProfile) {
     notFound();
   }
+  const navItems = {
+    Posts: `/${params.username}`,
+    Replies: `/${params.username}/with_replies`,
+    Likes: `/${params.username}/likes`,
+  };
   return (
     <div className=" w-full">
       {/* top header bar */}
@@ -101,23 +107,29 @@ export default async function Layout({
             className="flex gap-2 items-center justify-start"
             data-testid="followers"
           >
-            <div className="flex items-center gap-1">
+            <Link
+              href={`${params.username}/following`}
+              className="flex items-center gap-1 hover:underline decoration-1"
+            >
               {userProfile._count.following}
               <span className="text-base font-light text-gray-500">
                 Following
               </span>
-            </div>
-            <div className="flex items-center gap-1">
+            </Link>
+            <Link
+              href={`${params.username}/followers`}
+              className="flex items-center gap-1 hover:underline decoration-1"
+            >
               {userProfile._count.follower}
               <span className="text-base font-light text-gray-500">
                 Followers
               </span>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
       <nav>
-        <Navigation username={params.username} />
+        <Navigation username={params.username} navItems={navItems} />
       </nav>
       <div className="mb-16">{children}</div>
     </div>

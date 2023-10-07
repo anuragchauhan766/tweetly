@@ -8,25 +8,26 @@ function findIndexByValue(obj: Record<string, string>, value: string) {
   const keys = Object.keys(obj);
   return keys.findIndex((key) => obj[key] === value);
 }
-
-function Navigation({ username }: { username: string }) {
+interface NavigationProps {
+  username: string;
+  navItems: {
+    [key: string]: string;
+  };
+}
+function Navigation(props: NavigationProps) {
   const { data: session, status } = useSession({
     required: true,
   });
   const pathname = usePathname();
   if (status === "loading") return null;
-  const navItems = {
-    Posts: `/${username}`,
-    Replies: `/${username}/with_replies`,
-    Likes: `/${username}/likes`,
-  };
-  const selectedIndex = findIndexByValue(navItems, pathname);
+
+  const selectedIndex = findIndexByValue(props.navItems, pathname);
   return (
     <div className="w-full px-2  ">
       <Tab.Group selectedIndex={selectedIndex}>
         <Tab.List>
           <div className="flex items-center justify-around ">
-            {Object.entries(navItems).map(([item, url]) => (
+            {Object.entries(props.navItems).map(([item, url]) => (
               <Tab as={Fragment} key={item}>
                 {({ selected }) => (
                   <div className="w-full">
