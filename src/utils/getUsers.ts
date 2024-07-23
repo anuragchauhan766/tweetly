@@ -31,6 +31,9 @@ export const getUsers = async (
       },
       skip: (options.page - 1) * options.take,
       take: options.take,
+      orderBy: {
+        createdAt: "desc",
+      },
       ...usersQueries,
     });
     const userswithfollowers = users.map((user) => ({

@@ -6,80 +6,24 @@ export const getHomeTimelineTweets = async (
   userId: string,
   options: { take: number; page: number }
 ) => {
-  let res;
   try {
-    const user = await db.user.findUnique({
+    const res = await db.tweet.findMany({
       where: {
-        id: userId,
+        isReply: false,
       },
-      include: {
-        following: true,
+      take: options.take,
+      skip: (options.page - 1) * options.take,
+      orderBy: {
+        createdAt: "desc",
       },
+
+      ...tweetsWithAutherAndLikes,
     });
-    if (user?.following.length === 0) {
-      res = await db.tweet.findMany({
-        take: options.take,
-        orderBy: {
-          createdAt: "desc",
-        },
-
-        ...tweetsWithAutherAndLikes,
-      });
-    } else {
-      res = await db.tweet.findMany({
-        take: options.take,
-        skip: (options.page - 1) * options.take,
-        where: {
-          OR: [
-            {
-              auther: {
-                follower: {
-                  some: {
-                    followerId: userId,
-                  },
-                },
-              },
-            },
-            {
-              likes: {
-                some: {
-                  LikedByUser: {
-                    follower: {
-                      some: {
-                        followerId: userId,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            {
-              replies: {
-                some: {
-                  auther: {
-                    follower: {
-                      some: {
-                        followerId: userId,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          ],
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-
-        ...tweetsWithAutherAndLikes,
-      });
-    }
 
     const tweetsWithLikes = res.map((tweet) => ({
       ...tweet,
       isLikedByCurrentUser: tweet.likes.some(
-        (like) => like.LikedByUserId === userId
+        (like: any) => like.LikedByUserId === userId
       ),
     }));
 

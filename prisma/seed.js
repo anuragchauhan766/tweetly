@@ -5,7 +5,7 @@ async function main() {
   console.log("seeding database.....");
   // Seed Users
   const users = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 10; i++) {
     const sex = faker.person.sexType();
     const firstName = faker.person.firstName(sex);
     const lastName = faker.person.lastName(sex);
@@ -25,14 +25,20 @@ async function main() {
 
   // Seed Tweets, Likes, and Replies
   for (const user of users) {
-    const numTweets = Math.floor(Math.random() * 11); // Random number of tweets (0 to 10)
+    const numTweets = Math.floor(Math.random() * 5); // Random number of tweets (0 to 10)
     for (let i = 0; i < numTweets; i++) {
+      const includeMedia = Math.random() < 0.5;
+      const tweetData = {
+        content: faker.lorem.sentences(),
+        autherId: user.id,
+        createdAt: faker.date.past(),
+      };
+
+      if (includeMedia) {
+        tweetData.media = faker.image.urlLoremFlickr({ category: "nature" });
+      }
       const tweet = await prisma.tweet.create({
-        data: {
-          content: faker.lorem.sentences(),
-          autherId: user.id,
-          createdAt: faker.date.past(),
-        },
+        data: tweetData,
       });
 
       // Simulate likes on tweets
@@ -48,16 +54,21 @@ async function main() {
       }
 
       // Simulate replies to tweets
-      const numReplies = Math.floor(Math.random() * 6); // Random number of replies (0 to 5)
+      const numReplies = Math.floor(Math.random() * 3); // Random number of replies (0 to 5)
       for (let j = 0; j < numReplies; j++) {
+        const includeMedia = Math.random() < 0.3;
+        const replyData = {
+          content: faker.lorem.sentence(),
+          autherId: faker.helpers.arrayElement(users).id,
+          parentTweetId: tweet.id,
+          isReply: true,
+          createdAt: faker.date.past(),
+        };
+        if (includeMedia) {
+          replyData.media = faker.image.urlLoremFlickr({ category: "nature" });
+        }
         const reply = await prisma.tweet.create({
-          data: {
-            content: faker.lorem.sentence(),
-            autherId: faker.helpers.arrayElement(users).id,
-            parentTweetId: tweet.id,
-            isReply: true,
-            createdAt: faker.date.past(),
-          },
+          data: replyData,
         });
       }
     }
