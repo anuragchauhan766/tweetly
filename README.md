@@ -1,14 +1,14 @@
 # Tweetly - Next.js
 
-![GitHub repo size](https://img.shields.io/github/repo-size/anuragchauhan766/twitter-clone)
-![GitHub stars](https://img.shields.io/github/stars/anuragchauhan766/twitter-clone)
-![GitHub forks](https://img.shields.io/github/forks/anuragchauhan766/twitter-clone)
+![GitHub repo size](https://img.shields.io/github/repo-size/anuragchauhan766/tweetly)
+![GitHub stars](https://img.shields.io/github/stars/anuragchauhan766/tweetly)
+![GitHub forks](https://img.shields.io/github/forks/anuragchauhan766/tweetly)
 
 Tweetly is a social media application built with Next.js, designed to offer a seamless and engaging user experience. Over a two-month development period, I focused on incorporating the latest web technologies to create a responsive platform that adapts to all screen sizes. Tweetly introduces innovative features while maintaining a familiar interface, showcasing my expertise in building scalable and dynamic web applications.
 
 ## Features
 
-- **Tweet Posting**: Users can post tweets with either text or images, just like on Twitter.
+- **Tweet Posting**: Users can post tweets with either text or images..
 
 - **Follow Users**: Users have the ability to follow other people, allowing them to see their tweets and updates on their timeline.
 
@@ -34,13 +34,13 @@ Tweetly is a social media application built with Next.js, designed to offer a se
 
 To get started with this project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/anuragchauhan766/twitter-clone.git`
+1. Clone the repository: `git clone https://github.com/anuragchauhan766/tweetly.git`
 
-2. Install dependencies: `npm install`
+2. Install dependencies: `pnpm install`
 
 3. Set up the environment variables for Supabase and other configurations.
 
-4. Run the development server: `npm run dev`
+4. Run the development server: `pnpm run dev`
 
 5. Access the application in your browser at [http://localhost:3000](http://localhost:3000).
 
