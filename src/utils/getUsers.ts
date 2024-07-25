@@ -44,6 +44,6 @@ export const getUsers = async (
     }));
     return userswithfollowers;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

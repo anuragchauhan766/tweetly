@@ -1,16 +1,15 @@
-import GoBackButton from "@/components/common/button/GoBackButton";
-import { authOptions } from "@/lib/auth";
-import { AuthRequiredError } from "@/lib/exception";
-import { getServerSession } from "next-auth";
-import { getUserDetails } from "@/utils/getUserDetails";
-import ProfileImages from "@/components/common/ProfileImages";
-import { notFound } from "next/navigation";
 import EditProfileButton from "@/components/common/button/EditProfileButton";
 import FollowButton from "@/components/common/button/FollowButton";
-import { BiCalendar } from "react-icons/bi";
-import moment from "moment";
+import GoBackButton from "@/components/common/button/GoBackButton";
+import ProfileImages from "@/components/common/ProfileImages";
 import Navigation from "@/components/UserPage/Navigation";
+import { authOptions } from "@/lib/auth";
+import { getUserDetails } from "@/utils/getUserDetails";
+import moment from "moment";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { BiCalendar } from "react-icons/bi";
 
 export default async function Layout({
   children,

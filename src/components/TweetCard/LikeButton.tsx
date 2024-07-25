@@ -1,11 +1,9 @@
 "use client";
-import { toggleLikeHandler } from "@/utils/like";
-import { useOptimistic } from "react";
-import { useRouter } from "next/navigation";
-import React, { useTransition } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLoginDialog } from "@/context/LoginDialogContext";
+import { toggleLikeHandler } from "@/utils/like";
+import { useQueryClient } from "@tanstack/react-query";
+import React, { useOptimistic, useTransition } from "react";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 interface LikeProps {
   userId?: string;
@@ -16,9 +14,8 @@ interface LikeProps {
 }
 
 function LikeButton({ userId, ...props }: LikeProps) {
-  const router = useRouter();
   const queryClient = useQueryClient();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const { setIsLoginDialogVisible } = useLoginDialog();
   const [optimisticLike, setOptimisticLike] = useOptimistic({
     isLikedByCurrentUser: props.isLikedByCurrentUser,

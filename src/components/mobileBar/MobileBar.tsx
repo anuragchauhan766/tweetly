@@ -1,21 +1,18 @@
 "use client";
 import { Session } from "next-auth";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
 import { BiHomeCircle, BiSolidHomeCircle } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import Link from "next/link";
 
+import { useLoginDialog } from "@/context/LoginDialogContext";
 import {
   IoNotifications,
   IoNotificationsOutline,
   IoPerson,
   IoPersonOutline,
 } from "react-icons/io5";
-import { GiFeather } from "react-icons/gi";
 import ComposeTweet from "../common/button/ComposeTweet";
-import { useLoginDialog } from "@/context/LoginDialogContext";
 
 const NAVIGATION_ITEMS = [
   {

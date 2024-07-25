@@ -1,6 +1,6 @@
 import { db } from "@/lib/prisma";
 import { TweetsWithAutherAndLikes } from "@/types/Tweet";
-import { Prisma, Tweet } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 // queries for relation field and select field
 export const RepliesWithParentTweetQueries =
@@ -53,32 +53,30 @@ export const getRepliesWithParentTweet = async (
   currentuserId?: string
 ) => {
   "use server";
-  try {
-    const tweets = await db.tweet.findMany({
-      where: {
-        isReply: true,
-        auther: {
-          username: username,
-        },
-      },
-      ...RepliesWithParentTweetQueries,
-    });
 
-    const repliesWithParentTweet = tweets.map((tweet) => ({
-      ...tweet,
-      parentTweet: {
-        ...(tweet.parentTweet as TweetsWithAutherAndLikes),
-        isLikedByCurrentUser: (
-          tweet.parentTweet as TweetsWithAutherAndLikes
-        ).likes.some((like) => like.LikedByUserId === currentuserId),
+  const tweets = await db.tweet.findMany({
+    where: {
+      isReply: true,
+      auther: {
+        username: username,
       },
-      isLikedByCurrentUser: tweet.likes.some(
-        (like) => like.LikedByUserId === currentuserId
-      ),
-    }));
+    },
+    ...RepliesWithParentTweetQueries,
+  });
 
-    return repliesWithParentTweet;
-  } catch (error) {
-    throw error;
-  }
+  const repliesWithParentTweet = tweets.map((tweet) => ({
+    ...tweet,
+    parentTweet: {
+      ...(tweet.parentTweet as TweetsWithAutherAndLikes),
+      isLikedByCurrentUser: (
+        tweet.parentTweet as TweetsWithAutherAndLikes
+      ).likes.some((like) => like.LikedByUserId === currentuserId),
+    },
+    isLikedByCurrentUser: tweet.likes.some(
+      (like) => like.LikedByUserId === currentuserId
+    ),
+  }));
+
+  return repliesWithParentTweet;
+
 };

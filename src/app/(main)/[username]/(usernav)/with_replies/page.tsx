@@ -1,6 +1,5 @@
 import Reply_Pair from "@/components/UserPage/Reply_Pair";
 import { authOptions } from "@/lib/auth";
-import { AuthRequiredError } from "@/lib/exception";
 import { getRepliesWithParentTweet } from "@/utils/getRepliesWithParentTweet";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";

@@ -3,12 +3,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
+import { formatTimeRelative } from "@/helper/formatDate";
 import { TweetCardProps } from "@/types/Tweet";
-import { BsDot } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import ProfileImages from "../common/ProfileImages";
 import TweetComposer from "../common/TweetComposer";
-import { formatTimeRelative } from "@/helper/formatDate";
 
 function ReplyDialog({
   isOpen,

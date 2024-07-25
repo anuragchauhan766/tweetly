@@ -1,16 +1,14 @@
 import { tweetsWithAutherAndLikes } from "@/utils/Queries/tweet";
 import {
-  RepliesWithParentTweetQueries,
-  getRepliesWithParentTweet,
+  getRepliesWithParentTweet
 } from "@/utils/getRepliesWithParentTweet";
-import { User, Prisma } from "@prisma/client";
-import { type } from "os";
+import { Prisma } from "@prisma/client";
 
 export type TweetsWithAutherAndLikes = Prisma.TweetGetPayload<
   typeof tweetsWithAutherAndLikes
 >;
 export type TweetCardProps = TweetsWithAutherAndLikes & {
-  currentUserId?:string;
+  currentUserId?: string;
   isLikedByCurrentUser: boolean;
   isOnTweetPage?: boolean;
   isParentTweetwithReply?: boolean;

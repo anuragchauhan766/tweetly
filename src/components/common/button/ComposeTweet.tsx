@@ -6,7 +6,7 @@ import { useLoginDialog } from "@/context/LoginDialogContext";
 import { Session } from "next-auth";
 
 function ComposeTweet(props: { ClassName?: string; session: Session | null }) {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const { setIsLoginDialogVisible } = useLoginDialog();
   const handleClick = () => {

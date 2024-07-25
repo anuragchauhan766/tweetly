@@ -14,7 +14,7 @@ function FollowButton(props: {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { setIsLoginDialogVisible } = useLoginDialog();
-  const [__ispending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [isFollowingByCurrentUser, setIsFollowingByCurrentUser] = useOptimistic(
     props.isFollowing
   );

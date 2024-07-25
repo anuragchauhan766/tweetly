@@ -12,7 +12,7 @@ async function Following({ params }: { params: { username: string } }) {
     params.username,
     session?.user.id
   );
-  console.log(userProfile);
+
   if (!userProfile) {
     notFound();
   }

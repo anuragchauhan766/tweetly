@@ -1,6 +1,6 @@
 import TweetCard from "@/components/TweetCard/TweetCard";
 import { authOptions } from "@/lib/auth";
-import { AuthRequiredError } from "@/lib/exception";
+
 import { getLikedTweets } from "@/utils/getLikedTweets";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";

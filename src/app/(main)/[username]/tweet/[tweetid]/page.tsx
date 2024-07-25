@@ -1,7 +1,7 @@
 import TweetCard from "@/components/TweetCard/TweetCard";
 import GoBackButton from "@/components/common/button/GoBackButton";
 import { authOptions } from "@/lib/auth";
-import { AuthRequiredError } from "@/lib/exception";
+
 import { getTweet } from "@/utils/getTweet";
 import { getServerSession } from "next-auth";
 

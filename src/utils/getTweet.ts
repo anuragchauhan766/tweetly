@@ -48,34 +48,32 @@ export const TweetQueries = Prisma.validator<Prisma.TweetDefaultArgs>()({
 });
 export const getTweet = async (tweetId: string, userId?: string) => {
   "use server";
-  try {
-    const tweet = await db.tweet.findUnique({
-      where: {
-        id: tweetId,
-      },
-      ...TweetQueries,
-    });
-    if (!tweet) {
-      return;
-    }
 
-    const repliesWithLikes = tweet.replies.map((reply) => ({
-      ...reply,
-      isLikedByCurrentUser: reply.likes.some(
-        (like) => like.LikedByUserId === userId
-      ),
-    }));
-    const tweetWithLikes = {
-      ...tweet,
-      isLikedByCurrentUser: tweet.likes.some(
-        (like) => like.LikedByUserId === userId
-      ),
-      replies: repliesWithLikes,
-    };
-
-    return tweetWithLikes;
-  } catch (error) {
-    throw error;
+  const tweet = await db.tweet.findUnique({
+    where: {
+      id: tweetId,
+    },
+    ...TweetQueries,
+  });
+  if (!tweet) {
+    return;
   }
+
+  const repliesWithLikes = tweet.replies.map((reply) => ({
+    ...reply,
+    isLikedByCurrentUser: reply.likes.some(
+      (like) => like.LikedByUserId === userId
+    ),
+  }));
+  const tweetWithLikes = {
+    ...tweet,
+    isLikedByCurrentUser: tweet.likes.some(
+      (like) => like.LikedByUserId === userId
+    ),
+    replies: repliesWithLikes,
+  };
+
+  return tweetWithLikes;
+
 };
 

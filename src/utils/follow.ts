@@ -27,6 +27,6 @@ export const handlefollow = async (
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

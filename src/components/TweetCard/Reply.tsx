@@ -6,7 +6,7 @@ import ReplyDialog from "./ReplyDialog";
 import { TweetCardProps } from "@/types/Tweet";
 
 function Reply(props: TweetCardProps) {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <button
