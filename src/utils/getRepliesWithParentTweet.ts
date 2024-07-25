@@ -50,7 +50,7 @@ export const RepliesWithParentTweetQueries =
   });
 export const getRepliesWithParentTweet = async (
   username: string,
-  currentuserId: string
+  currentuserId?: string
 ) => {
   "use server";
   try {

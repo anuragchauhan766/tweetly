@@ -1,26 +1,24 @@
-import React from "react";
-import { GiFeather } from "react-icons/gi";
-import Link from "next/link";
-import Image from "next/image";
-import UserProfile from "./UserProfile";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import Navigation from "./Navigation";
+import { getServerSession } from "next-auth";
+import Image from "next/image";
+import Link from "next/link";
 import ComposeTweet from "../common/button/ComposeTweet";
+import Navigation from "./Navigation";
+import UserProfile from "./UserProfile";
 
 async function LeftSideBar() {
   const session = await getServerSession(authOptions);
-  if (!session) return null;
+
   return (
-    <header className="hidden xs:flex items-end h-screen fixed top-0 z-50">
-      <div className="flex flex-col w-20 xl:w-72 h-full justify-between px-2 items-stretch">
-        <div className="w-full h-full flex flex-col text-xl space-y-2  p-3">
-          <div className="flex flex-col space-y-2  w-full">
+    <header className="fixed top-0 z-50 hidden h-screen items-end xs:flex">
+      <div className="flex h-full w-20 flex-col items-stretch justify-between px-2 xl:w-72">
+        <div className="flex h-full w-full flex-col space-y-2 p-3 text-xl">
+          <div className="flex w-full flex-col space-y-2">
             <Link
               href="/"
-              className="p-2 xl:p-4 rounded-full hover:bg-white/10  w-fit"
+              className="w-fit rounded-full p-2 hover:bg-white/10 xl:p-4"
             >
-              <div className="relative w-6 h-6 ">
+              <div className="relative h-6 w-6">
                 <Image
                   src="/twitter.svg"
                   alt="twitter logo"
@@ -31,11 +29,11 @@ async function LeftSideBar() {
             </Link>
           </div>
           <Navigation session={session} />
-          <div className="w-full h-full">
-            <ComposeTweet ClassName="w-4 h-4" />
+          <div className="h-full w-full">
+            <ComposeTweet ClassName="w-4 h-4" session={session} />
           </div>
         </div>
-        <div className="w-full my-3">
+        <div className="my-3 w-full">
           <UserProfile />
         </div>
       </div>

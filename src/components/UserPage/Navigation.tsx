@@ -15,9 +15,7 @@ interface NavigationProps {
   };
 }
 function Navigation(props: NavigationProps) {
-  const { data: session, status } = useSession({
-    required: true,
-  });
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   if (status === "loading") return null;
 

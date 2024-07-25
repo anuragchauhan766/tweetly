@@ -3,8 +3,8 @@ import { tweetsWithAutherAndLikes } from "@/utils/Queries/tweet";
 import { db } from "@/lib/prisma";
 
 export const getHomeTimelineTweets = async (
-  userId: string,
-  options: { take: number; page: number }
+  options: { take: number; page: number },
+  userId?: string,
 ) => {
   try {
     const res = await db.tweet.findMany({

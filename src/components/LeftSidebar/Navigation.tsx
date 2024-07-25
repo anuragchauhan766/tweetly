@@ -1,5 +1,11 @@
 "use client";
+
+import { useLoginDialog } from "@/context/LoginDialogContext";
+import { Session } from "next-auth";
+import { usePathname, useRouter } from "next/navigation";
 import { BiHomeCircle, BiSolidHomeCircle } from "react-icons/bi";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { FaSearch } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import {
   IoMail,
@@ -9,11 +15,6 @@ import {
   IoPerson,
   IoPersonOutline,
 } from "react-icons/io5";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { Session } from "next-auth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
 
 const NAVIGATION_ITEMS = [
   {
@@ -47,9 +48,10 @@ const NAVIGATION_ITEMS = [
     activeIcon: IoPerson,
   },
 ];
-function Navigation(props: { session: Session }) {
+function Navigation({ session }: { session: Session | null }) {
   const pathname = usePathname();
-
+  const router = useRouter();
+  const { setIsLoginDialogVisible } = useLoginDialog();
   const isActivePath = (path: string) => {
     if (path === "/" && pathname !== path) {
       return false;
@@ -57,18 +59,24 @@ function Navigation(props: { session: Session }) {
 
     return pathname.startsWith(path);
   };
-
+  const handleNavigation = (title: string) => {
+    if (title === "Profile" && session === null) {
+      setIsLoginDialogVisible(true);
+    } else {
+      const path =
+        title === "Profile"
+          ? `/${session?.user.username || ""}`
+          : `/${title.toLowerCase()}`;
+      router.push(path);
+    }
+  };
   return (
-    <nav className="w-full flex flex-col space-y-2">
+    <nav className="flex w-full flex-col space-y-2">
       {NAVIGATION_ITEMS.map(({ title, icon: Icon, activeIcon: ActiveIcon }) => (
-        <Link
-          href={`/${
-            title === "Profile"
-              ? props.session.user.username
-              : title.toLocaleLowerCase()
-          }`}
+        <button
+          onClick={() => handleNavigation(title)}
           key={title}
-          className={`text-white flex items-center justify-start w-fit space-x-3 p-2 xl:px-3 rounded-3xl hover:bg-white/10 transition duration-200 `}
+          className={`flex w-fit items-center justify-start space-x-3 rounded-3xl p-2 text-white transition duration-200 hover:bg-white/10 xl:px-3`}
         >
           <div>
             {isActivePath("/" + title.toLocaleLowerCase()) ? (
@@ -80,12 +88,11 @@ function Navigation(props: { session: Session }) {
           <div
             className={`hidden xl:block ${
               isActivePath("/" + title.toLocaleLowerCase()) ? "font-bold" : ""
-            }
-              `}
+            } `}
           >
             {title}
           </div>
-        </Link>
+        </button>
       ))}
     </nav>
   );

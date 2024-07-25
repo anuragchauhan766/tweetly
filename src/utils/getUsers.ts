@@ -12,8 +12,8 @@ const usersQueries = Prisma.validator<Prisma.UserDefaultArgs>()({
   },
 });
 export const getUsers = async (
-  currentUserId: string,
-  options: { page: number; take: number }
+  options: { page: number; take: number },
+  currentUserId?: string,
 ) => {
   try {
     const users = await db.user.findMany({

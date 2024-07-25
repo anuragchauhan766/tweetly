@@ -1,16 +1,13 @@
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import Login from "./_component/Login";
 
-async function Home() {
-  const session = await getServerSession(authOptions);
-  if (session) redirect("/home");
+function Home() {
+  // const session = await getServerSession(authOptions);
+  // if (session) redirect("/home");
   return (
-    <div className="text-white w-screen h-screen">
-      <div className="grid grid-cols-1 grid-rows-5 sm:grid-cols-2 sm:grid-rows-none  place-items-center  w-full h-full p-12 sm:p-0 gap-y-20 sm:gap-y-0">
-        <div className="w-full  sm:h-full grid place-items-start sm:place-items-center ">
+    <div className="h-screen w-screen text-white">
+      <div className="grid h-full w-full grid-cols-1 grid-rows-5 place-items-center gap-y-20 p-12 sm:grid-cols-2 sm:grid-rows-none sm:gap-y-0 sm:p-0">
+        <div className="grid w-full place-items-start sm:h-full sm:place-items-center">
           <div className="w-16 sm:w-60 lg:w-80">
             <Image
               src="/twitter.svg"
@@ -26,9 +23,9 @@ async function Home() {
             ></Image>
           </div>
         </div>
-        <div className="w-full h-full grid place-items-start sm:place-items-center row-span-4 sm:row-auto">
+        <div className="row-span-4 grid h-full w-full place-items-start sm:row-auto sm:place-items-center">
           <div className="flex flex-col items-start justify-center gap-10">
-            <h1 className="font-black text-4xl sm:text-5xl  lg:text-7xl">
+            <h1 className="text-4xl font-black sm:text-5xl lg:text-7xl">
               Happening now
             </h1>
             <Login />

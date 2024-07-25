@@ -6,26 +6,30 @@ import ProfileCard from "./ProfileCard";
 import React from "react";
 import LoadingSpinner from "../common/button/LoadingSpinner";
 
-function WhoToFollow(props: { session: Session }) {
+function WhoToFollow(props: { session: Session | null }) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["whotofollow", props.session.user.id],
-      queryFn: async ({ pageParam = 1 }) => {
-        const res = await getUsers(props.session.user.id, {
-          page: pageParam,
-          take: 3,
-        });
+      queryKey: ["whotofollow", props.session?.user.id || "default User"],
+      queryFn: async ({ pageParam }) => {
+        const res = await getUsers(
+          {
+            page: pageParam,
+            take: 3,
+          },
+          props.session?.user.id
+        );
         return res;
       },
+      initialPageParam: 1,
       getNextPageParam: (lastpage, pages) => {
         return lastpage?.length === 0 ? undefined : pages.length + 1;
       },
     });
 
   return (
-    <div className="flex flex-col w-full bg-custom-gray rounded-2xl  space-y-3">
+    <div className="flex w-full flex-col space-y-3 rounded-2xl bg-custom-gray">
       <div className="px-4 pt-3">
-        <h3 className="font-bold text-xl text-white tracking-wider">
+        <h3 className="text-xl font-bold tracking-wider text-white">
           Who to follow
         </h3>
       </div>
@@ -35,15 +39,15 @@ function WhoToFollow(props: { session: Session }) {
             <ProfileCard
               key={people.id}
               {...people}
-              currentUserId={props.session.user.id}
+              currentUserId={props.session?.user.id}
             />
           ))}
         </React.Fragment>
       ))}
-      <div className="w-full flex items-center last:rounded-b-2xl hover:bg-white/10 transition duration-200 px-4 py-3  bg-transparent">
+      <div className="flex w-full items-center bg-transparent px-4 py-3 transition duration-200 last:rounded-b-2xl hover:bg-white/10">
         <button
           type="button"
-          className="w-full grid place-items-center h-full text-blue"
+          className="grid h-full w-full place-items-center text-blue"
           onClick={() => {
             fetchNextPage();
           }}

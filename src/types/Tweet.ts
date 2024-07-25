@@ -10,7 +10,7 @@ export type TweetsWithAutherAndLikes = Prisma.TweetGetPayload<
   typeof tweetsWithAutherAndLikes
 >;
 export type TweetCardProps = TweetsWithAutherAndLikes & {
-  currentUserId: User["id"];
+  currentUserId?:string;
   isLikedByCurrentUser: boolean;
   isOnTweetPage?: boolean;
   isParentTweetwithReply?: boolean;

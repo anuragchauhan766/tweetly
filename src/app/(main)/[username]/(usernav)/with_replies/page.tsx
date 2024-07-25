@@ -7,10 +7,10 @@ import { notFound } from "next/navigation";
 
 async function With_replies({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
+
   const tweets = await getRepliesWithParentTweet(
     params.username,
-    session.user.id
+    session?.user.id
   );
   if (tweets.length === 0) {
     notFound();

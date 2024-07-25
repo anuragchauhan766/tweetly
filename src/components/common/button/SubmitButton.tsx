@@ -1,5 +1,5 @@
 "use client";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import LoadingSpinner from "./LoadingSpinner";
 import React from "react";
 import { Dialog } from "@headlessui/react";

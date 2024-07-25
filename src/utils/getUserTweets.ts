@@ -20,7 +20,7 @@ export const userTweetsquery = Prisma.validator<Prisma.UserDefaultArgs>()({
  */
 export const getUserTweets = async (
   username: string,
-  currentUserId: string
+  currentUserId?: string
 ) => {
   "use server";
   try {

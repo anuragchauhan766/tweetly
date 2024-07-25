@@ -6,7 +6,7 @@ import { AuthRequiredError } from "@/lib/exception";
 
 async function Reply_Pair(props: RepliesWithParentTweet) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
+  // if (!session) throw new AuthRequiredError();
   return (
     <div>
       <TweetCard

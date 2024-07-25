@@ -22,7 +22,7 @@ const UserDetailsRelationqueries = Prisma.validator<Prisma.UserDefaultArgs>()({
 
 export const getUserDetails = async (
   username: string,
-  currentUserId: string
+  currentUserId?: string
 ) => {
   try {
     const res = await db.user.findUnique({

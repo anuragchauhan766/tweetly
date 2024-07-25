@@ -8,14 +8,14 @@ import React from "react";
 
 async function Likes({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
+
   const tweets = await getLikedTweets(
     {
       LikedByUser: {
         username: params.username,
       },
     },
-    session.user.id
+    session?.user.id
   );
   if (tweets.length === 0) {
     notFound();
@@ -23,7 +23,7 @@ async function Likes({ params }: { params: { username: string } }) {
   return (
     <div>
       {tweets.map((tweet) => (
-        <TweetCard key={tweet.id} {...tweet} currentUserId={session.user.id} />
+        <TweetCard key={tweet.id} {...tweet} currentUserId={session?.user.id} />
       ))}
     </div>
   );

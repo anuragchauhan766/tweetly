@@ -46,7 +46,7 @@ export const TweetQueries = Prisma.validator<Prisma.TweetDefaultArgs>()({
     },
   },
 });
-export const getTweet = async (tweetId: string, userId: string) => {
+export const getTweet = async (tweetId: string, userId?: string) => {
   "use server";
   try {
     const tweet = await db.tweet.findUnique({

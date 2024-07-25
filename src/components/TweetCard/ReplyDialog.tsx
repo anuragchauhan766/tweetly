@@ -19,16 +19,14 @@ function ReplyDialog({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   props: TweetCardProps;
 }) {
-  const { data: session, status } = useSession({
-    required: true,
-  });
+  const { data: session, status } = useSession();
   if (status === "loading") return null;
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-[100] "
+        className="relative z-[100]"
         onClose={() => setIsOpen(false)}
       >
         <Transition.Child
@@ -40,11 +38,11 @@ function ReplyDialog({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-light-gray " />
+          <div className="fixed inset-0 bg-light-gray" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto w-full  h-screen">
-          <div className="flex  justify-center items-start xs:p-10 text-center   h-full">
+        <div className="fixed inset-0 h-screen w-full overflow-y-auto">
+          <div className="flex h-full items-start justify-center text-center xs:p-10">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -56,51 +54,51 @@ function ReplyDialog({
             >
               {/* Dialog box  */}
               <Dialog.Panel
-                className="w-full max-w-screen-sm h-full xs:max-h-[90vh]  xs:h-fit transform overflow-hidden xs:rounded-2xl bg-black pl-2 text-left align-middle shadow-xl transition-all flex flex-col gap-3"
+                className="flex h-full w-full max-w-screen-sm transform flex-col gap-3 overflow-hidden bg-black pl-2 text-left align-middle shadow-xl transition-all xs:h-fit xs:max-h-[90vh] xs:rounded-2xl"
                 as="div"
               >
-                <div className="overflow-auto h-full">
+                <div className="h-full overflow-auto">
                   {/* Close button */}
-                  <div className=" flex items-center sticky top-0 backdrop-blur-sm bg-black/50 z-[10] p-2">
+                  <div className="sticky top-0 z-[10] flex items-center bg-black/50 p-2 backdrop-blur-sm">
                     <button
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-center rounded-full hover:bg-white/10 p-3"
+                      className="flex items-center justify-center rounded-full p-3 hover:bg-white/10"
                     >
-                      <AiOutlineClose className=" fill-white w-6 h-6" />
+                      <AiOutlineClose className="h-6 w-6 fill-white" />
                     </button>
-                    <div className="flex-1 text-white ml-2">
+                    <div className="ml-2 flex-1 text-white">
                       <span>Reply</span>
                     </div>
                   </div>
                   {/* main content of reply */}
                   <div className="h-full">
-                    <div className=" flex flex-col  flex-1 text-white relative">
-                      <div className="w-full flex space-x-2 items-start p-2  ">
-                        <div className="flex flex-col flex-1 w-12   basis-10 ">
+                    <div className="relative flex flex-1 flex-col text-white">
+                      <div className="flex w-full items-start space-x-2 p-2">
+                        <div className="flex w-12 flex-1 basis-10 flex-col">
                           <ProfileImages
                             ImgUrl={props.auther.image}
-                            className="w-10 h-10 xs:w-12 xs:h-12"
+                            className="h-10 w-10 xs:h-12 xs:w-12"
                           />
 
                           {/* relation div */}
-                          <div className="w-0.5 flex-1 bg-white/20   absolute top-4 left-7 xs:left-8 h-full z-[-1]"></div>
+                          <div className="absolute left-7 top-4 z-[-1] h-full w-0.5 flex-1 bg-white/20 xs:left-8"></div>
                         </div>
 
-                        <div className="w-full flex flex-col px-2 space-y-2">
+                        <div className="flex w-full flex-col space-y-2 px-2">
                           <div className="flex items-center justify-between">
-                            <div className="flex items-start justify-center flex-col  xs:flex-row gap-0 xs:gap-2">
+                            <div className="flex flex-col items-start justify-center gap-0 xs:flex-row xs:gap-2">
                               <div>
-                                <span className="font-bold hover:underline decoration-1 ">
+                                <span className="font-bold decoration-1 hover:underline">
                                   {props.auther.name}
                                 </span>
                               </div>
                               <div className="flex items-center justify-center space-x-1">
-                                <span className="font-thin text-gray-500 text-base">
+                                <span className="text-base font-thin text-gray-500">
                                   @{props.auther.username}
                                 </span>
 
                                 <div className="space-x-1">
-                                  <span className="text-gray-500 ">·</span>
+                                  <span className="text-gray-500">·</span>
                                   <span className="font-thin text-gray-500 hover:underline">
                                     {formatTimeRelative(props.createdAt)}
                                   </span>
@@ -116,10 +114,10 @@ function ReplyDialog({
                         </div>
                       </div>
                       <div className="flex p-2">
-                        <div className="w-12 flex items-center justify-center flex-col">
+                        <div className="flex w-12 flex-col items-center justify-center">
                           {/* <div className="w-[2px] flex-auto bg-white/20  "></div> */}
                         </div>
-                        <div className="text-gray-500 px-2 mx-2 text-base">
+                        <div className="mx-2 px-2 text-base text-gray-500">
                           Replying to{" "}
                           <span className="font-thin text-blue">
                             @{props.auther.username}

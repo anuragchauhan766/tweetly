@@ -20,8 +20,7 @@ export default async function Layout({
   params: { username: string };
 }) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
-  const userProfile = await getUserDetails(params.username, session.user.id);
+  const userProfile = await getUserDetails(params.username, session?.user.id);
 
   if (!userProfile) {
     notFound();
@@ -32,13 +31,13 @@ export default async function Layout({
     Likes: `/${params.username}/likes`,
   };
   return (
-    <div className=" w-full">
+    <div className="w-full">
       {/* top header bar */}
-      <div className="w-full  font-bold text-base xs:text-xl p-1 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 gap-6 ps-2 z-50">
+      <div className="sticky top-0 z-50 flex w-full items-center justify-start gap-6 bg-black/50 p-1 ps-2 text-base font-bold backdrop-blur-sm xs:text-xl">
         <GoBackButton />
         <div className="flex flex-col items-start justify-center">
           <span className="font-bold">{userProfile.name}</span>
-          <span className="font-light text-gray-500 text-xs">
+          <span className="text-xs font-light text-gray-500">
             {userProfile._count.tweets} Posts
           </span>
         </div>
@@ -46,33 +45,33 @@ export default async function Layout({
 
       <div className="w-fulll flex flex-col">
         {/* cover image */}
-        <div className="w-full h-52">
-          <div className="w-full h-full bg-white/25 "></div>
+        <div className="h-52 w-full">
+          <div className="h-full w-full bg-white/25"></div>
         </div>
         {/* Profile details */}
         <div
-          className="p-4 flex flex-col gap-2 items-start  justify-center"
+          className="flex flex-col items-start justify-center gap-2 p-4"
           data-testid="UserProfileInfo"
         >
-          <div className="w-full flex justify-between items-start ">
-            <div className=" relative w-1/4 h-full">
+          <div className="flex w-full items-start justify-between">
+            <div className="relative h-full w-1/4">
               <div
-                className="flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-visible pb-10"
+                className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center overflow-visible pb-10"
                 data-testid="user-Profile-photo"
               >
                 <ProfileImages
                   ImgUrl={userProfile.image}
                   ImgSize="200"
-                  className="w-24 h-24 xs:w-32 xs:h-32 min-w-[40px] border-2 xs:border-4"
+                  className="h-24 w-24 min-w-[40px] border-2 xs:h-32 xs:w-32 xs:border-4"
                 />
               </div>
             </div>
             <div>
-              {userProfile.id === session.user.id ? (
+              {userProfile.id === session?.user.id ? (
                 <EditProfileButton />
               ) : (
                 <FollowButton
-                  currentUserId={session.user.id}
+                  currentUserId={session?.user.id}
                   userIdTofollow={userProfile.id}
                   isFollowing={userProfile.isFollowingByCurrentUser}
                 />
@@ -80,17 +79,17 @@ export default async function Layout({
             </div>
           </div>
           <div
-            className="flex flex-col items-start justify-center  "
+            className="flex flex-col items-start justify-center"
             data-test-id="username"
           >
-            <span className="text-xl font-bold ">{userProfile.name}</span>
+            <span className="text-xl font-bold">{userProfile.name}</span>
             <span className="text-base font-light text-gray-500">
               @{userProfile.username}
             </span>
           </div>
           {/* discription */}
           <div
-            className=" flex items-center justify-start pe-5 text-base break-words font-normal"
+            className="flex items-center justify-start break-words pe-5 text-base font-normal"
             data-testid="userDescription"
           >
             <span>{userProfile.discription ?? "Discription"}</span>
@@ -98,18 +97,18 @@ export default async function Layout({
           {/* joinded on */}
           <div className="flex items-center justify-start gap-2 text-gray-500">
             <BiCalendar />
-            <span className="text-base font-light ">
+            <span className="text-base font-light">
               {moment(userProfile.createdAt).format("[Joined] MMMM YYYY")}
             </span>
           </div>
           {/* followers Following */}
           <div
-            className="flex gap-2 items-center justify-start"
+            className="flex items-center justify-start gap-2"
             data-testid="followers"
           >
             <Link
               href={`${params.username}/following`}
-              className="flex items-center gap-1 hover:underline decoration-1"
+              className="flex items-center gap-1 decoration-1 hover:underline"
             >
               {userProfile._count.following}
               <span className="text-base font-light text-gray-500">
@@ -118,7 +117,7 @@ export default async function Layout({
             </Link>
             <Link
               href={`${params.username}/followers`}
-              className="flex items-center gap-1 hover:underline decoration-1"
+              className="flex items-center gap-1 decoration-1 hover:underline"
             >
               {userProfile._count.follower}
               <span className="text-base font-light text-gray-500">

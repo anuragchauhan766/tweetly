@@ -9,15 +9,15 @@ import React from "react";
 
 async function Posts({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
-  const tweets = await getUserTweets(params.username, session.user.id);
+
+  const tweets = await getUserTweets(params.username, session?.user.id);
   if (!tweets || tweets.length === 0) {
     notFound();
   }
   return (
     <div>
       {tweets.map((tweet) => (
-        <TweetCard key={tweet.id} {...tweet} currentUserId={session.user.id} />
+        <TweetCard key={tweet.id} {...tweet} currentUserId={session?.user.id} />
       ))}
     </div>
   );

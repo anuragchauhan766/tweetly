@@ -9,29 +9,33 @@ import { HiOutlinePhoto } from "react-icons/hi2";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLoginDialog } from "@/context/LoginDialogContext";
 type propsType =
   | {
-      session: Session;
+      session: Session | null;
       id: string;
       replybox?: false;
       parentTweetId?: never;
     }
   | {
-      session: Session;
+      session: Session | null;
       id: string;
       replybox: true;
       parentTweetId: string;
     };
 
-function TweetComposer(props: propsType) {
+function TweetComposer({ session, ...props }: propsType) {
   const [input, setInput] = useState("");
   const queryClient = useQueryClient();
-
+  const { setIsLoginDialogVisible } = useLoginDialog();
   const [imagesrc, setImagesrc] = useState<string | null>(null);
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
   const [inputFile, setInputFile] = useState("");
 
   async function action(data: FormData) {
+    if (!session) {
+      setIsLoginDialogVisible(true);
+    }
     await (props.replybox
       ? submitTweet(data, {
           isReply: true,
@@ -39,7 +43,7 @@ function TweetComposer(props: propsType) {
         })
       : submitTweet(data));
     queryClient.invalidateQueries({
-      queryKey: ["timeline", props.session.user.id],
+      queryKey: ["timeline", session?.user.id || "default User"],
     });
 
     setInput("");
@@ -58,20 +62,20 @@ function TweetComposer(props: propsType) {
   };
   return (
     <div
-      className={`w-full  h-fit flex items-center pt-4 space-x-2 ${
-        props.replybox ? "p-2 flex" : " border-b-[0.5px] border-gray-600 px-4"
+      className={`flex h-fit w-full items-center space-x-2 pt-4 ${
+        props.replybox ? "flex p-2" : "border-b-[0.5px] border-gray-600 px-4"
       }`}
     >
       <ProfileImages
-        ImgUrl={props.session.user.image}
-        className="w-10 h-10 xs:w-12 xs:h-12"
+        ImgUrl={session?.user.image}
+        className="h-10 w-10 xs:h-12 xs:w-12"
       />
       <form
-        className="w-full h-fit  flex flex-col justify-start items-center"
+        className="flex h-fit w-full flex-col items-center justify-start"
         action={action}
       >
         <div
-          className={`w-full  h-fit ${
+          className={`h-fit w-full ${
             props.replybox
               ? ""
               : "focus-within:border-b-[0.5px] focus:border-gray-600"
@@ -79,7 +83,7 @@ function TweetComposer(props: propsType) {
         >
           <textarea
             ref={textareaRef}
-            className="bg-transparent appearance-none outline-none w-full h-auto resize-none   text-xl text-white/70 overflow-hidden p-2 pb-0 box-border"
+            className="box-border h-auto w-full resize-none appearance-none overflow-hidden bg-transparent p-2 pb-0 text-xl text-white/70 outline-none"
             placeholder="What is happening?!"
             name="tweetText"
             onChange={(e) => {
@@ -89,31 +93,31 @@ function TweetComposer(props: propsType) {
             value={input}
           ></textarea>
           {imagesrc && (
-            <div className="relative w-full aspect-auto rounded-2xl mb-2">
+            <div className="relative mb-2 aspect-auto w-full rounded-2xl">
               <Image
                 src={imagesrc}
                 alt=""
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="rounded-2xl w-full h-auto object-contain"
+                className="h-auto w-full rounded-2xl object-contain"
               />
               <button
                 onClick={() => {
                   setInputFile("");
                   setImagesrc(null);
                 }}
-                className="absolute p-3 rounded-full bg-black/50 hover:bg-black/30 text-white right-2 top-3"
+                className="absolute right-2 top-3 rounded-full bg-black/50 p-3 text-white hover:bg-black/30"
               >
-                <AiOutlineClose className=" fill-white w-6 h-6" />
+                <AiOutlineClose className="h-6 w-6 fill-white" />
               </button>
             </div>
           )}
         </div>
-        <div className="w-full h-16 flex items-center justify-between">
-          <div className="p-2 rounded-full hover:bg-blue/20">
+        <div className="flex h-16 w-full items-center justify-between">
+          <div className="rounded-full p-2 hover:bg-blue/20">
             <label htmlFor={props.id} className="cursor-pointer">
-              <HiOutlinePhoto className="text-blue w-6 h-6" />
+              <HiOutlinePhoto className="h-6 w-6 text-blue" />
             </label>
             <input
               type="file"

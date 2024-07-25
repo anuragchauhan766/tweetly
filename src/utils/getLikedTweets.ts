@@ -11,7 +11,7 @@ export const likedTweets = Prisma.validator<Prisma.LikeDefaultArgs>()({
 });
 export const getLikedTweets = async (
   where: Prisma.LikeWhereInput,
-  currentUserId: string
+  currentUserId?: string
 ) => {
   "use server";
   try {

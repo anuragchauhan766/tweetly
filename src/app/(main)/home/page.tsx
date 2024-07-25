@@ -1,19 +1,17 @@
-import UserProfile from "@/components/LeftSidebar/UserProfile";
-import ProfileImages from "@/components/common/ProfileImages";
+// import ProfileImages from "@/components/common/ProfileImages";
 import TweetComposer from "@/components/common/TweetComposer";
 import Timeline from "@/components/home/Timeline";
+import UserProfile from "@/components/LeftSidebar/UserProfile";
 import { authOptions } from "@/lib/auth";
-import { AuthRequiredError } from "@/lib/exception";
 
 import { getServerSession } from "next-auth";
 
 async function Home() {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
 
   return (
-    <div className=" w-full">
-      <div className="w-full h-12 font-bold text-xl p-2 xs:p-4 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 z-50 gap-3">
+    <div className="w-full">
+      <div className="sticky top-0 z-50 flex h-12 w-full items-center justify-start gap-3 bg-black/50 p-2 text-xl font-bold backdrop-blur-sm xs:p-4">
         <div className="xs:hidden">
           <UserProfile />
         </div>
@@ -24,7 +22,7 @@ async function Home() {
       <div className="hidden xs:block">
         <TweetComposer session={session} id="main_input_file_composer" />
       </div>
-      <div className="mt-2 xs:mt-0 mb-10">
+      <div className="mb-10 mt-2 xs:mt-0">
         <Timeline session={session} />
       </div>
     </div>

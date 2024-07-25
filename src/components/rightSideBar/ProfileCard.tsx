@@ -13,28 +13,33 @@ function ProfileCard(props: ProfileCardProps) {
     return name;
   }
   return (
-    <div className="w-full flex items-center last:rounded-b-2xl hover:bg-white/10 transition duration-200 px-4 py-3  bg-transparent">
+    <div className="flex w-full items-center bg-transparent px-4 py-3 transition duration-200 last:rounded-b-2xl hover:bg-white/10">
       <Link
         href={`/${props.username}`}
-        className="flex items-center space-x-2  w-full text-sm"
+        className="flex w-full items-center space-x-2 text-sm"
       >
         {/* <div className="rounded-full w-10 h-10 bg-slate-50"></div> */}
-        <ProfileImages ImgUrl={props.image} className="w-10 h-10" />
-        <div className="flex flex-col items-start justify-center text-sm text-left whitespace-nowrap">
-          <span className="font-bold text-base hover:underline hover:decoration-1">
+        <ProfileImages ImgUrl={props.image} className="h-10 w-10" />
+        <div className="flex flex-col items-start justify-center whitespace-nowrap text-left text-sm">
+          <span className="text-base font-bold hover:underline hover:decoration-1">
             {name(props.name, 17)}
           </span>
-          <span className="font-thin text-white/70 text-sm">
+          <span className="text-sm font-thin text-white/70">
             @{props.username}
           </span>
         </div>
       </Link>
       <div className="">
-        <FollowButton
-          currentUserId={props.currentUserId}
-          userIdTofollow={props.id}
-          isFollowing={props.isFollowingByCurrentUser}
-        />
+        {
+          // dont show follow button if the user is the current user
+          props.currentUserId !== props.id && (
+            <FollowButton
+              currentUserId={props.currentUserId}
+              userIdTofollow={props.id}
+              isFollowing={props.isFollowingByCurrentUser}
+            />
+          )
+        }
       </div>
     </div>
   );

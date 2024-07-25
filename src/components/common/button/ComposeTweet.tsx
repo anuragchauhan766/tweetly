@@ -2,17 +2,28 @@
 import React, { useState } from "react";
 import { GiFeather } from "react-icons/gi";
 import TweetComposerDialog from "../TweetComposerDialog";
+import { useLoginDialog } from "@/context/LoginDialogContext";
+import { Session } from "next-auth";
 
-function ComposeTweet(props: { ClassName?: string }) {
+function ComposeTweet(props: { ClassName?: string; session: Session | null }) {
   let [isOpen, setIsOpen] = useState(false);
+
+  const { setIsLoginDialogVisible } = useLoginDialog();
+  const handleClick = () => {
+    if (props.session) {
+      setIsOpen(true);
+    } else {
+      setIsLoginDialogVisible(true);
+    }
+  };
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
-        className="w-fit lg:w-full  grid place-items-center rounded-full p-3  xl:px-8 xl:py-2 text-xl bg-blue xl:mx-2 hover:bg-opacity-80 font-bold"
+        onClick={handleClick}
+        className="grid w-fit place-items-center rounded-full bg-blue p-3 text-xl font-bold hover:bg-opacity-80 lg:w-full xl:mx-2 xl:px-8 xl:py-2"
       >
         <span className="hidden xl:inline">Post</span>
-        <GiFeather className={`xl:hidden  ${props.ClassName}`} />
+        <GiFeather className={`xl:hidden ${props.ClassName}`} />
       </button>
       <TweetComposerDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
