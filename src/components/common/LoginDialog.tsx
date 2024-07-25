@@ -1,32 +1,27 @@
 "use client";
+import Login from "@/app/(auth)/_component/Login";
+import { useLoginDialog } from "@/context/LoginDialogContext";
+
 import {
+  Description,
   Dialog,
   DialogPanel,
+  DialogTitle,
   Transition,
   TransitionChild,
 } from "@headlessui/react";
 import { Fragment } from "react";
+
 import { AiOutlineClose } from "react-icons/ai";
 
-import { useSession } from "next-auth/react";
-import TweetComposer from "../common/TweetComposer";
-
-function TweetComposerDialog({
-  isOpen,
-  setIsOpen,
-}: {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-  const { data: session, status } = useSession();
-  if (status === "loading") return null;
-
+export default function LoginDialog() {
+  const { isLoginDialogVisible, setIsLoginDialogVisible } = useLoginDialog();
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition appear show={isLoginDialogVisible} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-[100]"
-        onClose={() => setIsOpen(false)}
+        onClose={() => setIsLoginDialogVisible(false)}
       >
         <TransitionChild
           as={Fragment}
@@ -41,7 +36,7 @@ function TweetComposerDialog({
         </TransitionChild>
 
         <div className="fixed inset-0 h-screen w-full overflow-y-auto">
-          <div className="flex h-full items-start justify-center text-center xs:p-10">
+          <div className="flex h-full items-center justify-center text-center xs:p-10">
             <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
@@ -53,27 +48,28 @@ function TweetComposerDialog({
             >
               {/* Dialog box  */}
               <DialogPanel
-                className="flex h-full w-full max-w-screen-sm transform flex-col gap-3 overflow-hidden bg-black pl-2 text-left align-middle shadow-xl transition-all xs:h-fit xs:max-h-[90vh] xs:rounded-2xl"
+                className="flex h-full w-full max-w-sm transform flex-col gap-3 overflow-hidden bg-black pl-2 text-left align-middle text-white shadow-xl transition-all xs:h-fit xs:max-h-[90vh] xs:rounded-2xl"
                 as="div"
               >
-                <div className="h-full overflow-auto">
+                <div className="flex h-full flex-col gap-7 overflow-auto py-6">
                   {/* Close button */}
                   <div className="sticky top-0 z-[10] flex items-center bg-black/50 p-2 backdrop-blur-sm">
                     <button
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => setIsLoginDialogVisible(false)}
                       className="flex items-center justify-center rounded-full p-3 hover:bg-white/10"
                     >
                       <AiOutlineClose className="h-6 w-6 fill-white" />
                     </button>
-                    <div className="ml-2 flex-1 text-white">
-                      <span>Tweet</span>
-                    </div>
                   </div>
-                  <div className="h-full">
-                    <TweetComposer
-                      session={session}
-                      id="Tweetcomposer-dialog-file-input"
-                    />
+                  <DialogTitle className="w-full px-6 text-center text-xl font-bold md:text-4xl">
+                    Sign In Now!
+                  </DialogTitle>
+                  <Description className="px-6 text-center text-sm">
+                    To access User specific feature like posting, profile view
+                    you have to Signup.
+                  </Description>
+                  <div className="px-6">
+                    <Login />
                   </div>
                 </div>
               </DialogPanel>
@@ -84,4 +80,3 @@ function TweetComposerDialog({
     </Transition>
   );
 }
-export default TweetComposerDialog;

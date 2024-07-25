@@ -1,29 +1,32 @@
 "use client";
+import { useLoginDialog } from "@/context/LoginDialogContext";
 import { toggleLikeHandler } from "@/utils/like";
-import { experimental_useOptimistic as useOptimistic } from "react";
-import { useRouter } from "next/navigation";
-import React, { useTransition } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useQueryClient } from "@tanstack/react-query";
+import React, { useOptimistic, useTransition } from "react";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 interface LikeProps {
-  userId: string;
+  userId?: string;
   tweetId: string;
   LikeCount: number;
   isLikedByCurrentUser: boolean;
   pageNumber?: number;
 }
 
-function LikeButton(props: LikeProps) {
-  const router = useRouter();
+function LikeButton({ userId, ...props }: LikeProps) {
   const queryClient = useQueryClient();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
+  const { setIsLoginDialogVisible } = useLoginDialog();
   const [optimisticLike, setOptimisticLike] = useOptimistic({
     isLikedByCurrentUser: props.isLikedByCurrentUser,
     LikeCount: props.LikeCount,
   });
 
   const toggleLike = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!userId) {
+      setIsLoginDialogVisible(true);
+      return;
+    }
     e.stopPropagation();
     setOptimisticLike((prev) => ({
       isLikedByCurrentUser: !prev.isLikedByCurrentUser,
@@ -34,13 +37,10 @@ function LikeButton(props: LikeProps) {
 
     // start transition for server request work
     startTransition(() => {
-      toggleLikeHandler({ userId: props.userId, tweetId: props.tweetId });
+      toggleLikeHandler({ userId: userId, tweetId: props.tweetId });
       queryClient.invalidateQueries({
-        queryKey: ["timeline", props.userId],
-        refetchPage(lastPage, index, allPages) {
-          console.log(index, props.pageNumber);
-          return index === props.pageNumber;
-        },
+        queryKey: ["timeline", userId],
+        refetchType: "active",
       });
       // router.refresh();
     });
@@ -49,17 +49,17 @@ function LikeButton(props: LikeProps) {
   return (
     <button
       // disabled={isPending}
-      className="flex items-center justify-center space-x-2 group/like cursor-pointer z-[10]"
+      className="group/like z-[10] flex cursor-pointer items-center justify-center space-x-2"
       onClick={toggleLike}
     >
-      <div className="p-3 rounded-full group-hover/like:bg-pink/20">
+      <div className="rounded-full p-3 group-hover/like:bg-pink/20">
         {optimisticLike.isLikedByCurrentUser ? (
-          <AiFillHeart className="group-hover/like:text-pink text-lg fill-pink" />
+          <AiFillHeart className="fill-pink text-lg group-hover/like:text-pink" />
         ) : (
-          <AiOutlineHeart className="group-hover/like:text-pink text-lg" />
+          <AiOutlineHeart className="text-lg group-hover/like:text-pink" />
         )}
       </div>
-      <span className="group-hover/like:text-pink text-sm">
+      <span className="text-sm group-hover/like:text-pink">
         {optimisticLike.LikeCount}
       </span>
     </button>

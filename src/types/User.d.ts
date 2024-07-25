@@ -9,6 +9,6 @@ const usersQueries = Prisma.validator<Prisma.UserDefaultArgs>()({
   },
 });
 export type ProfileCardProps = Prisma.UserGetPayload<typeof usersQueries> & {
-  currentUserId: string;
+  currentUserId?: string;
   isFollowingByCurrentUser: boolean;
 };

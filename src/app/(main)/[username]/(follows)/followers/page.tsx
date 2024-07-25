@@ -7,10 +7,10 @@ import React from "react";
 
 async function Followers({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions);
-  if (!session) return null;
+
   const userProfile = await getUsersFollowsDetails(
     params.username,
-    session.user.id
+    session?.user.id
   );
   if (!userProfile) {
     notFound();
@@ -21,7 +21,7 @@ async function Followers({ params }: { params: { username: string } }) {
         <ProfileCard
           key={people.id}
           {...people}
-          currentUserId={session.user.id}
+          currentUserId={session?.user.id}
         />
       ))}
     </div>

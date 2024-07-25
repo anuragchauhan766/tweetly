@@ -42,7 +42,7 @@ const getUsersFollowsDetailsQueries =
   });
 export const getUsersFollowsDetails = async (
   username: string,
-  currentUserId: string
+  currentUserId?: string
 ) => {
   try {
     const res = await db.user.findUnique({

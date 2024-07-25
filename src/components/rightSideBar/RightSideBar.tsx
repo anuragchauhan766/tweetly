@@ -1,42 +1,37 @@
-import React from "react";
+import { authOptions } from "@/lib/auth";
+import { getNews } from "@/utils/getNews";
+import { getServerSession } from "next-auth";
 import { FiSearch } from "react-icons/fi";
 import TrendingCard from "./TrendingCard";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { AuthRequiredError } from "@/lib/exception";
-import { getNews } from "@/utils/getNews";
 import WhoToFollow from "./WhoToFollow";
 async function RightSideBar() {
   const session = await getServerSession(authOptions);
-  if (!session) throw new AuthRequiredError();
 
   const data = await getNews();
 
   return (
-    <div className="hidden lg:block w-full flex-1 h-screen self-start  sticky   top-0">
-      <div className="flex flex-col w-full h-screen space-y-4 overflow-y-auto no-scrollbar">
+    <div className="sticky top-0 hidden h-screen w-full flex-1 self-start lg:block">
+      <div className="scrollbar flex h-screen w-full flex-col space-y-4 overflow-y-auto">
         {/* search bar */}
-        <div className="flex items-center justify-center w-full sticky top-0 bg-black py-1 z-[100]">
-          <form action="#" className="w-full">
-            <label htmlFor="searchbox" className="w-full relative group/search">
-              <div className="absolute top-3 left-3">
-                <FiSearch className="text-xl stroke-gray-500 group-focus-within/search:stroke-blue" />
-              </div>
-              <div className="w-full">
-                <input
-                  id="searchbox"
-                  type="text"
-                  className="rounded-3xl p-3 w-full text-sm bg-custom-gray pl-12 border border-custom-gray placeholder:text-gray-400 focus:border-blue outline-none focus:bg-transparent"
-                  placeholder="Search"
-                />
-              </div>
-            </label>
-          </form>
+        <div className="sticky top-0 z-[100] flex w-full items-center justify-center bg-black py-1">
+          <label htmlFor="searchbox" className="group/search relative w-full">
+            <div className="absolute left-3 top-3">
+              <FiSearch className="stroke-gray-500 text-xl group-focus-within/search:stroke-blue" />
+            </div>
+            <div className="w-full">
+              <input
+                id="searchbox"
+                type="text"
+                className="w-full rounded-3xl border border-custom-gray bg-custom-gray p-3 pl-12 text-sm outline-none placeholder:text-gray-400 focus:border-blue focus:bg-transparent"
+                placeholder="Search"
+              />
+            </div>
+          </label>
         </div>
         {/* whats happining */}
-        <div className="flex flex-col w-full bg-custom-gray rounded-2xl  space-y-3 ">
+        <div className="flex w-full flex-col space-y-3 rounded-2xl bg-custom-gray">
           <div className="px-4 pt-3">
-            <h3 className="font-bold text-xl text-white tracking-wider">
+            <h3 className="text-xl font-bold tracking-wider text-white">
               What&apos;s Happining
             </h3>
           </div>
@@ -47,7 +42,7 @@ async function RightSideBar() {
 
         <WhoToFollow session={session} />
 
-        <div className="flex items-center justify-center w-full text-sm font-thin text-gray-50 pb-20">
+        <div className="flex w-full items-center justify-center pb-20 text-sm font-thin text-gray-50">
           <span>Created by Anurag Singh Chauhan</span>
         </div>
       </div>

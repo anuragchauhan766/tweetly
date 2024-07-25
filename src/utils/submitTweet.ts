@@ -9,13 +9,13 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 
 type optionsTypes =
   | {
-      isReply: true;
-      parentTweetId: string;
-    }
+    isReply: true;
+    parentTweetId: string;
+  }
   | {
-      isReply: false | undefined;
-      parentTweetId?: string;
-    };
+    isReply: false | undefined;
+    parentTweetId?: string;
+  };
 
 export const submitTweet = async (
   formData: FormData,
@@ -68,7 +68,7 @@ const uploadFile = async (userid: string, file?: File) => {
       file
     );
     if (error) {
-      console.log(error);
+      console.error(error);
       throw new Error("Cannot Upload media");
     } else {
       return bucket.getPublicUrl(data.path).data.publicUrl;

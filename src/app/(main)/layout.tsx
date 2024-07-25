@@ -11,16 +11,16 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-  if (!session) return null;
+
   return (
-    <div className="w-full h-full flex items-center justify-center relative text-white ">
-      <div className=" max-w-screen-xl h-full w-full xs:w-fit min-w-full xs:min-w-fit lg:min-w-0 ">
-        <div className="  w-full h-full relative flex flex-row ">
+    <div className="relative flex h-full w-full items-center justify-center text-white">
+      <div className="h-full w-full min-w-full max-w-screen-xl xs:w-fit xs:min-w-fit lg:min-w-0">
+        <div className="relative flex h-full w-full flex-row">
           <LeftSideBar />
-          <main className="xs:ml-20 xl:ml-72 h-full  w-full lg:max-w-[992px] lg:pr-3">
-            <div className="w-full flex  justify-center space-x-4 h-full">
-              <div className="max-w-screen-sm w-full  border-r-[0.5px] border-l-[0.5px] border-gray-600 overflow-y-auto h-full no-scrollbar">
-                <div className="w-full lg:w-[640px]  ">{children}</div>
+          <main className="h-full w-full xs:ml-20 lg:max-w-[992px] lg:pr-3 xl:ml-72">
+            <div className="flex h-full w-full justify-center space-x-4">
+              <div className="no-scrollbar h-full min-h-svh w-full max-w-screen-sm overflow-y-auto border-l-[0.5px] border-r-[0.5px] border-gray-600">
+                <div className="w-full lg:w-[640px]">{children}</div>
               </div>
               <RightSideBar />
             </div>

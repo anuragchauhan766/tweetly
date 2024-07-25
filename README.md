@@ -1,10 +1,10 @@
-# Twitter Clone (x.com) - Next.js
+# Tweetly - Next.js
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/anuragchauhan766/twitter-clone)
 ![GitHub stars](https://img.shields.io/github/stars/anuragchauhan766/twitter-clone)
 ![GitHub forks](https://img.shields.io/github/forks/anuragchauhan766/twitter-clone)
 
-A Twitter clone made with Next.js that includes the most recent capabilities and technologies. This project seeks to imitate the Twitter experience, providing users with a familiar environment while also introducing a few new features. It was created during a two-month period with the primary goal of studying and comprehending the workings of social and large-scale applications. The project is intended to be completely responsive to all screen sizes.
+Tweetly is a social media application built with Next.js, designed to offer a seamless and engaging user experience. Over a two-month development period, I focused on incorporating the latest web technologies to create a responsive platform that adapts to all screen sizes. Tweetly introduces innovative features while maintaining a familiar interface, showcasing my expertise in building scalable and dynamic web applications.
 
 ## Features
 
@@ -50,4 +50,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Thank you for checking out the Twitter Clone (x.com) built with Next.js! We hope you enjoy using it and welcome any feedback or contributions to make it even better. Happy tweeting!
+Thank you for checking out the Tweetly built with Next.js! We hope you enjoy using it and welcome any feedback or contributions to make it even better. Happy tweeting!

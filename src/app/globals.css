@@ -17,34 +17,34 @@
   .scrollbar-stable {
     scrollbar-gutter: stable;
   }
-}
-html {
-  overflow: hidden;
-}
-body {
-  height: 100vh;
-  overflow: auto;
-  background-color: black;
-}
 
-/* Custom scrollbar styles */
-body::-webkit-scrollbar {
-  width: 10px;
-  /* Adjust scrollbar width */
+  .scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(240, 240, 240, 0.1);
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(240, 240, 240, 0.2);
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(240, 240, 240, 0.4);
+  }
+  .scrollbar::-webkit-scrollbar-thumb:active {
+    background: rgba(240, 240, 240, 0.9);
+  }
 }
-
-body::-webkit-scrollbar-thumb {
-  background-color: #888;
-  /* Scrollbar thumb color */
-  border-radius: 5px;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
-  /* Scrollbar track color */
-}
-
-/* Prevent horizontal scrollbar from appearing */
-html {
-  overflow-x: hidden;
+@layer base {
+  * {
+    @apply scrollbar;
+  }
+  html {
+    overflow-x: hidden;
+  }
+  body {
+    background-color: black;
+  }
 }

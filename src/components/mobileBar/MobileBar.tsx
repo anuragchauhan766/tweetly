@@ -1,19 +1,17 @@
 "use client";
 import { Session } from "next-auth";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { BiHomeCircle, BiSolidHomeCircle } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import Link from "next/link";
 
+import { useLoginDialog } from "@/context/LoginDialogContext";
 import {
   IoNotifications,
   IoNotificationsOutline,
   IoPerson,
   IoPersonOutline,
 } from "react-icons/io5";
-import { GiFeather } from "react-icons/gi";
 import ComposeTweet from "../common/button/ComposeTweet";
 
 const NAVIGATION_ITEMS = [
@@ -38,9 +36,10 @@ const NAVIGATION_ITEMS = [
     activeIcon: IoPerson,
   },
 ];
-function MobileBar(props: { session: Session }) {
+function MobileBar({ session }: { session: Session | null }) {
   const pathname = usePathname();
-
+  const router = useRouter();
+  const { setIsLoginDialogVisible } = useLoginDialog();
   const isActivePath = (path: string) => {
     if (path === "/" && pathname !== path) {
       return false;
@@ -48,17 +47,25 @@ function MobileBar(props: { session: Session }) {
 
     return pathname.startsWith(path);
   };
+
+  const handleNavigation = (title: string) => {
+    if (title === "Profile" && session === null) {
+      setIsLoginDialogVisible(true);
+    } else {
+      const path =
+        title === "Profile"
+          ? `/${session?.user.username || ""}`
+          : `/${title.toLowerCase()}`;
+      router.push(path);
+    }
+  };
   return (
-    <nav className="fixed bottom-0 left-0 right-0 w-full flex xs:hidden flex-row items-center justify-around space-y-2 bg-black h-16 z-[50]">
+    <nav className="fixed bottom-0 left-0 right-0 z-[50] flex h-16 w-full flex-row items-center justify-around space-y-2 bg-black xs:hidden">
       {NAVIGATION_ITEMS.map(({ title, icon: Icon, activeIcon: ActiveIcon }) => (
-        <Link
-          href={`/${
-            title === "Profile"
-              ? props.session.user.username
-              : title.toLocaleLowerCase()
-          }`}
+        <button
+          onClick={() => handleNavigation(title)}
           key={title}
-          className={`text-white flex items-center justify-start w-fit space-x-3 p-2 xl:px-3 rounded-3xl hover:bg-white/10 transition duration-200 `}
+          className={`flex w-fit items-center justify-start space-x-3 rounded-3xl p-2 text-white transition duration-200 hover:bg-white/10 xl:px-3`}
         >
           <div>
             {isActivePath("/" + title.toLocaleLowerCase()) ? (
@@ -70,15 +77,14 @@ function MobileBar(props: { session: Session }) {
           <div
             className={`hidden xl:block ${
               isActivePath("/" + title.toLocaleLowerCase()) ? "font-bold" : ""
-            }
-              `}
+            } `}
           >
             {title}
           </div>
-        </Link>
+        </button>
       ))}
-      <div className="fixed bottom-20 right-5 flex items-center justify-center ">
-        <ComposeTweet ClassName="w-8 h-8" />
+      <div className="fixed bottom-20 right-5 flex items-center justify-center">
+        <ComposeTweet ClassName="w-8 h-8" session={session} />
       </div>
     </nav>
   );

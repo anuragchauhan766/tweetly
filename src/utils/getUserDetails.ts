@@ -22,7 +22,7 @@ const UserDetailsRelationqueries = Prisma.validator<Prisma.UserDefaultArgs>()({
 
 export const getUserDetails = async (
   username: string,
-  currentUserId: string
+  currentUserId?: string
 ) => {
   try {
     const res = await db.user.findUnique({
@@ -40,6 +40,6 @@ export const getUserDetails = async (
     };
     return userwithfollowers;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

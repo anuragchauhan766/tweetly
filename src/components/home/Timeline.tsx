@@ -7,17 +7,18 @@ import { Session } from "next-auth";
 import React from "react";
 import { useInView } from "react-intersection-observer";
 import LoadingSpinner from "../common/button/LoadingSpinner";
-function Timeline(props: { session: Session }) {
+function Timeline(props: { session: Session | null }) {
   const { ref, inView } = useInView();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["timeline", props.session.user.id],
-      queryFn: async ({ pageParam = 1 }) => {
-        return await getHomeTimelineTweets(props.session.user.id, {
+      queryKey: ["timeline", props.session?.user.id || "default User" ],
+      queryFn: async ({ pageParam  }) => {
+        return await getHomeTimelineTweets( {
           page: pageParam,
           take: 10,
-        });
+        },props.session?.user.id);
       },
+      initialPageParam:1,
       getNextPageParam: (lastpage, pages) => {
         return lastpage?.length === 0 ? undefined : pages.length + 1;
       },
@@ -28,7 +29,7 @@ function Timeline(props: { session: Session }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
-  if (status === "loading") {
+  if (status === "pending") {
     return (
       <div className="grid place-items-center p-6 text-blue">
         <LoadingSpinner />
@@ -43,7 +44,7 @@ function Timeline(props: { session: Session }) {
             const tweetCardProps: TweetCardProps = {
               ...tweet,
               pageNumber: i,
-              currentUserId: props.session.user.id,
+              currentUserId: props.session?.user.id,
             };
 
             return <TweetCard key={tweet.id} {...tweetCardProps} />;

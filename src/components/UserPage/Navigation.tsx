@@ -1,9 +1,8 @@
 "use client";
 import { Tab } from "@headlessui/react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 function findIndexByValue(obj: Record<string, string>, value: string) {
   const keys = Object.keys(obj);
   return keys.findIndex((key) => obj[key] === value);
@@ -15,34 +14,30 @@ interface NavigationProps {
   };
 }
 function Navigation(props: NavigationProps) {
-  const { data: session, status } = useSession({
-    required: true,
-  });
   const pathname = usePathname();
-  if (status === "loading") return null;
 
   const selectedIndex = findIndexByValue(props.navItems, pathname);
   return (
-    <div className="w-full px-2  ">
+    <div className="w-full px-2">
       <Tab.Group selectedIndex={selectedIndex}>
         <Tab.List>
-          <div className="flex items-center justify-around ">
+          <div className="flex items-center justify-around">
             {Object.entries(props.navItems).map(([item, url]) => (
               <Tab as={Fragment} key={item}>
                 {({ selected }) => (
                   <div className="w-full">
                     <Link
                       href={url}
-                      className="w-full flex items-center justify-center p-2 hover:bg-white/10 px-5 outline-none"
+                      className="flex w-full items-center justify-center p-2 px-5 outline-none hover:bg-white/10"
                     >
                       <div
-                        className={`w-full relative flex flex-col items-center justify-center p-2 text-base ${
+                        className={`relative flex w-full flex-col items-center justify-center p-2 text-base ${
                           selected ? "text-white" : "text-gray-500"
-                        }  font-semibold`}
+                        } font-semibold`}
                       >
                         <span>{item}</span>
                         {selected ? (
-                          <div className="absolute -bottom-2 w-3/4 h-1 rounded-full bg-blue"></div>
+                          <div className="absolute -bottom-2 h-1 w-3/4 rounded-full bg-blue"></div>
                         ) : null}
                       </div>
                     </Link>

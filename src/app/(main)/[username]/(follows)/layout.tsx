@@ -14,10 +14,10 @@ async function Layout({
   params: { username: string };
 }) {
   const session = await getServerSession(authOptions);
-  if (!session) return null;
+
   const userProfile = await getUsersFollowsDetails(
     params.username,
-    session.user.id
+    session?.user.id
   );
   if (!userProfile) {
     notFound();
@@ -28,11 +28,11 @@ async function Layout({
   };
   return (
     <div className="w-full">
-      <div className="w-full  font-bold text-base xs:text-xl p-1 flex items-center justify-start backdrop-blur-sm bg-black/50 sticky top-0 gap-6 ps-2 z-50">
+      <div className="sticky top-0 z-50 flex w-full items-center justify-start gap-6 bg-black/50 p-1 ps-2 text-base font-bold backdrop-blur-sm xs:text-xl">
         <GoBackButton />
         <div className="flex flex-col items-start justify-center">
           <span className="font-bold">{userProfile.name}</span>
-          <span className="font-light text-gray-500 text-base">
+          <span className="text-base font-light text-gray-500">
             {userProfile.username}
           </span>
         </div>
