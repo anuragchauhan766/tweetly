@@ -1,11 +1,10 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import Link from "next/link";
+import { BiSolidPaperPlane } from "react-icons/bi";
 import ComposeTweet from "../common/button/ComposeTweet";
 import Navigation from "./Navigation";
 import UserProfile from "./UserProfile";
-
 async function LeftSideBar() {
   const session = await getServerSession(authOptions);
 
@@ -16,15 +15,11 @@ async function LeftSideBar() {
           <div className="flex w-full flex-col space-y-2">
             <Link
               href="/"
-              className="w-fit rounded-full p-2 hover:bg-white/10 xl:p-4"
+              className="w-fit rounded-full p-2 hover:bg-white/10 xl:p-3"
             >
-              <div className="relative h-6 w-6">
-                <Image
-                  src="/twitter.svg"
-                  alt="twitter logo"
-                  fill
-                  sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 20px"
-                ></Image>
+              <div className="relative flex items-center justify-center gap-4 font-extrabold">
+                <BiSolidPaperPlane className="h-8 w-8" />
+                <span className="hidden text-3xl xl:inline">Tweetly</span>
               </div>
             </Link>
           </div>
@@ -33,7 +28,7 @@ async function LeftSideBar() {
             <ComposeTweet ClassName="w-4 h-4" session={session} />
           </div>
         </div>
-        <div className="my-3 w-full">
+        <div className="my-3 w-full p-3">
           <UserProfile />
         </div>
       </div>

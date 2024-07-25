@@ -2,7 +2,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { signOut, useSession } from "next-auth/react";
 import { BsThreeDots } from "react-icons/bs";
-
+import { CgLogIn } from "react-icons/cg";
 import ProfileImages from "../common/ProfileImages";
 import { useLoginDialog } from "@/context/LoginDialogContext";
 
@@ -37,10 +37,11 @@ function UserProfile() {
         </MenuButton>
       ) : (
         <button
-          className="flex h-fit w-full cursor-pointer items-center justify-around rounded-full border border-white/40 font-bold text-white transition duration-200 hover:bg-white/10 xs:p-2 xl:p-3"
+          className="flex h-fit cursor-pointer items-center justify-around rounded-full border border-white/40 p-2 font-bold text-white transition duration-200 hover:bg-white/10 max-xs:hidden xs:p-2 xl:w-full xl:p-3"
           onClick={handleMenuClick}
         >
-          Sign Up
+          <CgLogIn className="h-6 w-6 xl:hidden" />
+          <span className="hidden xl:inline">Sign Up</span>
         </button>
       )}
       <div>

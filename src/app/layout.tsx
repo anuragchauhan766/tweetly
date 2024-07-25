@@ -8,8 +8,8 @@ import LoginDialog from "@/components/common/LoginDialog";
 import { LoginDialogProvider } from "@/context/LoginDialogContext";
 
 export const metadata: Metadata = {
-  title: "Twitter",
-  description: "Twitter clone app for development and learning",
+  title: "Tweet Now",
+  description: "Tweet Now , connect with friends and the world around you.",
 };
 
 export default function RootLayout({
