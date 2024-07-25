@@ -31,17 +31,18 @@ const nextConfig = {
       },
     ],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "/home",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
-// async redirects() {
-//   return [
-//     {
-//       source: "/",
-//       destination: "/home",
-//       permanent: true,
-//     },
-//   ];
-// },
+
 //https://avatars.githubusercontent.com/u/90090056?v=4
 // https://lh3.googleusercontent.com
